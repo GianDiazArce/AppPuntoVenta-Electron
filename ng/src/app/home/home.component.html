@@ -1,0 +1,19 @@
+
+<h1>Hola estas son las tallas disponibles</h1>
+
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Id</th>
+      <th>Namee</th>
+    </tr>
+  </thead>
+  <tbody *ngFor="let talla of tallas">
+    <tr >
+      <td scope="row">{{talla.id}}</td>
+      <td>{{talla.name}}</td>
+    </tr>
+    
+  </tbody>
+</table>

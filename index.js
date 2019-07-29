@@ -1,4 +1,5 @@
 const { app, BrowserWindow, Menu } = require('electron');
+var request = require('request');
 
 
 const url = require('url');
@@ -6,7 +7,7 @@ const path = require('path');
 
 if(process.env.NODE_ENV !== 'production'){
     require('electron-reload')(__dirname,{
-        electron: path.join(__dirname, '../node_modules', '.bin', 'electron')
+        electron: path.join(__dirname, 'node_modules', '.bin', 'electron')
     });
 }
 
@@ -15,26 +16,15 @@ let tallasWin;
 
 function createWindow(){
     // Iniciar la ventana con tamaños
-    let ancho = 1024;
-    let alto = 720;
+    let ancho = 1050;
+    let alto = 768;
     mainWindow = new BrowserWindow({
         width: ancho,
         height: alto
     });
+    mainWindow.loadFile('ng/dist/index.html');
 
-    // Cargar el index.html
-    mainWindow.loadURL(url.format({
-        pathname: path.join(__dirname, 'views/index.html'),
-        protocol: 'file',
-        slashes: true
-    }))
-
-    let mainMenu = Menu.buildFromTemplate(templateMenu);
-    Menu.setApplicationMenu(mainMenu);
-
-    // Abre las herramientas de desarrollo (DevTools).
-    mainWindow.webContents.openDevTools()
-
+    mainWindow.webContents.openDevTools();
     // Cuando la ventana es cerrada
     mainWindow.on('closed', () => {
         // Elimina la referencia al objeto window, normalmente  guardarías las ventanas
@@ -42,6 +32,11 @@ function createWindow(){
         // en el que deberías borrar el elemento correspondiente.
         win = null
     });    
+
+    
+    
+    
+
 }
 
 // Este método será llamado cuando Electron haya terminado
@@ -69,33 +64,6 @@ app.on('activate', () => {
 // En este archivo puedes incluir el resto del código del proceso principal de
 // tu aplicación. También puedes ponerlos en archivos separados y requerirlos aquí.
 
-//Template del menu
-const templateMenu = [
-    {
-        label: 'Archivo',
-        submenu: [
-            {
-                label: 'Nueva Talla',
-                accelerator: 'Ctrl + N',
-                click() {
-                    tallasWindow()
-                }
-            }
-        ]
-    }
-];
 
-function tallasWindow(){
-    tallasWin = new BrowserWindow({
-        width: 400,
-        height: 330,
-        title: 'Tallas'
-    });
-    tallasWin.setMenu(null);
-    tallasWin.loadURL(url.format({
-        pathname: path.join(__dirname, 'views/tallas.html'),
-        protocol: 'file',
-        slashes: true
-    }))
-}
+
 
