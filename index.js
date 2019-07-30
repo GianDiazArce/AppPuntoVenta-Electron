@@ -16,8 +16,8 @@ let tallasWin;
 
 function createWindow(){
     // Iniciar la ventana con tamaños
-    let ancho = 1050;
-    let alto = 768;
+    let ancho = 1920;
+    let alto = 1080;
     mainWindow = new BrowserWindow({
         width: ancho,
         height: alto

@@ -21,5 +21,14 @@ export class TallaService {
         
         return this._http.get(this.url + 'talla', {headers})
     }
+
+    newTalla(talla):Observable<any>{
+
+        let params = "json=" + JSON.stringify(talla);
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.post(this.url + 'talla', params, {headers});
+    }
     
 }
