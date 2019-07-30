@@ -1,0 +1,13 @@
+<p class="h2">Registrar nueva marca</p>
+<p class="p">Registre el nombre de la marca que usara para el modelo</p>
+
+<form #newMarca="ngForm" (ngSubmit)="onSubmit(newMarca)" class="col-md-6">
+  <div class="form-group">
+    <label for="name">Nombre</label>
+    <input type="text" name="name" #name="ngModel" [(ngModel)]="marca.name" class="form-control">
+    
+  </div>
+  <input type="submit" class="btn btn-success" value="Crear">
+</form>
+
+<button class="btn btn-dark mt-3" [routerLink]="['/marca']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i>Volver</button>

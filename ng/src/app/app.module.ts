@@ -14,6 +14,7 @@ import { MarcaComponent } from './components/marca/marca.component';
 import { GenerarVentaComponent } from './components/generar-venta/generar-venta.component';
 import { VentasComponent } from './components/ventas/ventas.component';
 import { TallaNewComponent } from './components/talla-new/talla-new.component';
+import { MarcaNewComponent } from './components/marca-new/marca-new.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { TallaNewComponent } from './components/talla-new/talla-new.component';
     MarcaComponent,
     GenerarVentaComponent,
     VentasComponent,
-    TallaNewComponent
+    TallaNewComponent,
+    MarcaNewComponent
   ],
   imports: [
     BrowserModule,

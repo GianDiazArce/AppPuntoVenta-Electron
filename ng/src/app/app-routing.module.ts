@@ -10,6 +10,7 @@ import { TipoComponent } from './components/tipo/tipo.component';
 import { MarcaComponent } from './components/marca/marca.component';
 import { ModeloComponent } from './components/modelo/modelo.component';
 import { TallaNewComponent } from './components/talla-new/talla-new.component';
+import { MarcaNewComponent } from './components/marca-new/marca-new.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -19,10 +20,11 @@ const routes: Routes = [
   {path: 'talla', component:TallaComponent},
   {path: 'nueva-talla', component:TallaNewComponent},
 
+  {path: 'marca', component:MarcaComponent},
+  {path: 'nueva-marca', component:MarcaNewComponent},
 
   {path: 'generar-venta', component: GenerarVentaComponent},
   {path: 'tipo', component:TipoComponent},
-  {path: 'marca', component:MarcaComponent},
   {path: 'modelo', component:ModeloComponent},
 
   {path: '**', component: ErrorComponent}
