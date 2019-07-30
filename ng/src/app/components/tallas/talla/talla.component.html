@@ -7,14 +7,14 @@
 <table class="table text-center">
   <thead>
     <tr>
-      <th>ID</th>
+      <th>#</th>
       <th>Talla</th>
       <th>Acciones</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let talla of tallas">
-      <td scope="row">{{talla.id}}</td>
+    <tr *ngFor="let talla of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
+      <td scope="row">{{i+1}}</td>
       <td>{{talla.name}}</td>
       <td>
         <a href="#" class="btn btn-warning mr-3">Editar</a>
@@ -23,5 +23,6 @@
     </tr>        
   </tbody>
 </table>
+<pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
 
 <button class="btn btn-dark" [routerLink]="['/inicio']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Volver </button>

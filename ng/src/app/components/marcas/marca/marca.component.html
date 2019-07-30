@@ -7,15 +7,15 @@
 <table class="table text-center">
   <thead>
     <tr>
-      <th>ID</th>
-      <th>Marca</th>
-      <th>Acciones</th>
+      <th scope="col">#</th>
+      <th scope="col">Marca</th>
+      <th scope="col">Acciones</th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let marca of marcas">
-      <td scope="row">{{marca.id}}</td>
-      <td>{{marca.name}}</td>
+    <tr *ngFor="let marca of marcas; index as i">
+      <td scope="row">{{i+1}}</td>
+      <td scope="row">{{marca.name}}</td>
       <td>
         <a href="#" class="btn btn-warning mr-3">Editar</a>
         <a href="#" class="btn btn-danger">Borrar</a>

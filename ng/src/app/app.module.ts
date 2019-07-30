@@ -3,7 +3,14 @@ import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+// Externals
+import { NgxPaginationModule } from "ngx-pagination";
+
+
+// Rutas
 import { AppRoutingModule } from './app-routing.module';
+
+// Components
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { TallaComponent } from './components/tallas/talla/talla.component';
@@ -34,7 +41,8 @@ import { MarcaNewComponent } from './components/marcas/marca-new/marca-new.compo
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
   ],
   providers: [],
   bootstrap: [AppComponent]
