@@ -4,6 +4,36 @@
 
 <button class="btn btn-success" [routerLink]="['/nueva-marca']" > <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nueva Marca</button>
 
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success" data-toggle="modal" data-target="#newMarca">
+  <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nueva Marca
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="newMarca" tabindex="-1" role="dialog" aria-labelledby="newMarcaLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newMarcaLabel">Agregar nueva Marca</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #newMarca="ngForm" (ngSubmit)="onSubmit(newMarca)" class="">
+          <div class="form-group">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="marca.name" class="form-control col-md-8">
+            
+          </div>
+          <input type="submit" class="btn btn-primary float-right" value="Crear">
+        </form>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
 <table class="table text-center">
   <thead>
     <tr>
@@ -13,9 +43,9 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let marca of marcas; index as i">
+    <tr *ngFor="let marc of marcas; index as i">
       <td scope="row">{{i+1}}</td>
-      <td scope="row">{{marca.name}}</td>
+      <td scope="row">{{marc.name}}</td>
       <td>
         <a href="#" class="btn btn-warning mr-3">Editar</a>
         <a href="#" class="btn btn-danger">Borrar</a>

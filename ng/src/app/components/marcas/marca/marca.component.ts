@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MarcaService } from 'src/app/services/marca.service';
+import { Marca } from 'src/app/models/marca';
 
 @Component({
   selector: 'app-marca',
@@ -10,11 +11,12 @@ import { MarcaService } from 'src/app/services/marca.service';
 export class MarcaComponent implements OnInit {
 
   public marcas;
+  public marca:Marca;
 
   constructor(
     private _marcaService: MarcaService
   ) {
-
+    this.marca = new Marca(1,'');
    }
 
   ngOnInit() {
@@ -28,6 +30,21 @@ export class MarcaComponent implements OnInit {
           this.marcas = response.marcas;
         } else {
           console.log(response.message)
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+  onSubmit(form){
+    this._marcaService.save(this.marca).subscribe(
+      response => {
+        if(response.status == 'success'){
+          location.reload();
+          form.reset();
+        } else {
+          console.log(response.message);
         }
       },
       error => {

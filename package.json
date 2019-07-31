@@ -12,5 +12,8 @@
     "electron": "^5.0.8",
     "electron-reload": "^1.4.1",
     "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "electron-packager": "^14.0.4"
   }
 }
