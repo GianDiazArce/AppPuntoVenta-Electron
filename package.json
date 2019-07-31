@@ -8,12 +8,20 @@
   },
   "author": "",
   "license": "ISC",
+  "keywords": [
+    "Electron",
+    "quick",
+    "start",
+    "tutorial",
+    "demo"
+  ],
   "dependencies": {
-    "electron": "^5.0.8",
+    
     "electron-reload": "^1.4.1",
     "request": "^2.88.0"
   },
   "devDependencies": {
+    "electron": "^6.0.0",
     "electron-packager": "^14.0.4"
   }
 }
