@@ -20,7 +20,6 @@ import { ModeloComponent } from './components/modelos/modelo/modelo.component';
 import { MarcaComponent } from './components/marcas/marca/marca.component';
 import { GenerarVentaComponent } from './components/ventas/generar-venta/generar-venta.component';
 import { VentasComponent } from './components/ventas/venta/ventas.component';
-import { TallaNewComponent } from './components/tallas/talla-new/talla-new.component';
 import { MarcaNewComponent } from './components/marcas/marca-new/marca-new.component';
 
 @NgModule({
@@ -33,8 +32,7 @@ import { MarcaNewComponent } from './components/marcas/marca-new/marca-new.compo
     ModeloComponent,
     MarcaComponent,
     GenerarVentaComponent,
-    VentasComponent,
-    TallaNewComponent,
+    VentasComponent, 
     MarcaNewComponent
   ],
   imports: [

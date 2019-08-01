@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TallaService } from 'src/app/services/talla.service';
+import { Talla } from 'src/app/models/talla';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-talla',
@@ -10,15 +12,24 @@ import { TallaService } from 'src/app/services/talla.service';
 export class TallaComponent implements OnInit {
 
   public tallas;
+  public talla: Talla;
+  private update;
+  public status;
+
   pageActual: number = 1;
   constructor(
     private _tallaService: TallaService
-  ) { }
+  ) { 
+    this.talla = new Talla(1,'');
+    this.update = null;
+  }
 
   ngOnInit() {
     this.getTallas();
   }
-
+  add(){
+    this.update = null;
+  }
   getTallas(){
     this._tallaService.getTallas().subscribe(
       response => {
@@ -32,6 +43,58 @@ export class TallaComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  onSubmit(form){   
+    this._tallaService.save(this.talla).subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.getTallas();
+          this.closeModal();
+          
+        } else {
+          console.log(response.error);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+  preUpdateTalla(tall){
+    this.update = true;
+    this._tallaService.getTalla(tall.id).subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.talla = response.talla;
+        } else {
+          console.log(response.message);
+        }
+      },
+      error => {
+        console.log(error)
+      }
+    )
+  }
+  closeModal(){
+    document.getElementById('btnClose').click();
+  }
+  updateTalla(id){
+    this._tallaService.update(id, this.talla).subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.getTallas();
+          this.closeModal();
+          this.status = 'success';
+        } else {
+          console.log(response.message);
+          this.status = 'error';
+        }        
+      },
+      error => {
+        console.log(error);
+        this.status = 'error';
+      }
+    )
   }
 
 }

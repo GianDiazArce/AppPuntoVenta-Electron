@@ -41,7 +41,8 @@ export class MarcaComponent implements OnInit {
     this._marcaService.save(this.marca).subscribe(
       response => {
         if(response.status == 'success'){
-          location.reload();
+          document.getElementById('btnClose').click();
+          this.getMarcas();
           form.reset();
         } else {
           console.log(response.message);

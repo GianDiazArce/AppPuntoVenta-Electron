@@ -2,7 +2,46 @@
 
 <p>Aqui puedes ver las tallas disponibles</p>
 
-<button class="btn btn-success" [routerLink]="['/nueva-talla']" > <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nueva talla</button>
+<div class="alert alert-success" role="alert" *ngIf="status == 'success'">
+  <strong>La talla fue actualizada correctamente...</strong>
+</div>
+<div class="alert alert-danger" role="alert" *ngIf="status == 'error'">
+    <strong>La talla fue actualizada correctamente...</strong>
+</div>
+
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#exampleModal">
+  <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nueva talla
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="!update">Agregar nueva talla</h5>
+        <h5 class="modal-title" id="exampleModalLabel" *ngIf="update">Editar Talla</h5>
+        <button type="button" id="btnClose" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <form #newTalla="ngForm" (ngSubmit)="onSubmit(newTalla)" >
+          <div class="form-group">
+            <label for="name">Talla </label>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="talla.name" class="form-control col-md-7" aria-describedby="helpId" required>
+            <small id="helpId" class="text-muted">Ingrese una nueva talla, por ejemplo (X,L,XL) y tambien puede agregar numeros </small>
+          </div>
+          <input type="submit" class="btn btn-success" *ngIf="!update" value="Crear">
+          <input type="button" class="btn btn-success" (click)="updateTalla(talla.id)" *ngIf="update" value="Guardar">
+        </form>
+      </div>      
+    </div>
+  </div>
+</div>
+
+<p class="p page_actual">Pagina - {{pageActual}}</p>
 
 <table class="table text-center">
   <thead>
@@ -13,16 +52,19 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let talla of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
+    <tr *ngFor="let tall of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
       <td scope="row">{{i+1}}</td>
-      <td>{{talla.name}}</td>
+      <td>{{tall.name}}</td>
       <td>
-        <a href="#" class="btn btn-warning mr-3">Editar</a>
+        <button type="button" class="btn btn-warning mr-3" (click)="preUpdateTalla(tall)" data-toggle="modal" data-target="#exampleModal">
+          Editar
+        </button>
+        <!--<a href="#" class="btn btn-warning mr-3">Editar</a>-->
         <a href="#" class="btn btn-danger">Borrar</a>
       </td>
     </tr>        
   </tbody>
 </table>
-<pagination-controls (pageChange)="pageActual = $event"></pagination-controls>
+<pagination-controls class="text-center" (pageChange)="pageActual = $event"></pagination-controls>
 
 <button class="btn btn-dark" [routerLink]="['/inicio']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Volver </button>

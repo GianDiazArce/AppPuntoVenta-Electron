@@ -1,3 +1,34 @@
-<p>
-  modelo works!
-</p>
+<p class="h2">Modelos</p>
+<p class="p">Aquí estan los modelos registrados</p>
+
+<button class="btn btn-success mb-3">
+  <i class="fa fa-plus mr-1" aria-hidden="true"></i> Crear nuevo modelo
+</button>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Nombre</th>
+      <th>Marca</th>
+      <th>Tipo</th>
+      <th>Talla</th>
+      <th>Stock</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let model of modelos; let i = index">
+      <td scope="row">{{i+1}}</td>
+      <td>{{model.name}}</td>
+      <td>{{model.marca.name}}</td>
+      <td>{{model.tipo.name}}</td>
+      <td>{{model.talla.name}}</td>
+      <td>{{model.stock}}</td>
+      <td>
+        <a href="#" class="btn btn-warning mr-3">Editar</a>
+        <a href="#" class="btn btn-danger">Borrar</a>
+      </td>
+    </tr>    
+  </tbody>
+</table>

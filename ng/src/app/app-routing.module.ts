@@ -9,7 +9,6 @@ import { GenerarVentaComponent } from './components/ventas/generar-venta/generar
 import { TipoComponent } from './components/tipos/tipo/tipo.component';
 import { MarcaComponent } from './components/marcas/marca/marca.component';
 import { ModeloComponent } from './components/modelos/modelo/modelo.component';
-import { TallaNewComponent } from './components/tallas/talla-new/talla-new.component';
 import { MarcaNewComponent } from './components/marcas/marca-new/marca-new.component';
 
 const routes: Routes = [
@@ -18,7 +17,6 @@ const routes: Routes = [
 
   // Rutas de tallas
   {path: 'talla', component:TallaComponent},
-  {path: 'nueva-talla', component:TallaNewComponent},
 
   {path: 'marca', component:MarcaComponent},
   {path: 'nueva-marca', component:MarcaNewComponent},

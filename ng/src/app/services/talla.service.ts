@@ -22,13 +22,25 @@ export class TallaService {
         return this._http.get(this.url + 'talla', {headers})
     }
 
-    newTalla(talla):Observable<any>{
+    save(talla):Observable<any>{
 
         let params = "json=" + JSON.stringify(talla);
 
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
         return this._http.post(this.url + 'talla', params, {headers});
+    }
+
+    getTalla(id):Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.get(this.url + 'talla/' + id, {headers});
+    }
+    update(id,talla):Observable<any>{
+        let params = "json="+ JSON.stringify(talla);
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.put(this.url + 'talla/' + id, params, {headers});
     }
     
 }
