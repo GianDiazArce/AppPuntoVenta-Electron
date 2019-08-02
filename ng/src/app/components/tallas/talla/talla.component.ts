@@ -15,6 +15,9 @@ export class TallaComponent implements OnInit {
   public talla: Talla;
   private update;
   public status;
+  private accion;
+  
+  
 
   pageActual: number = 1;
   constructor(
@@ -27,6 +30,8 @@ export class TallaComponent implements OnInit {
   ngOnInit() {
     this.getTallas();
   }
+
+  
   add(){
     this.update = null;
   }
@@ -79,6 +84,7 @@ export class TallaComponent implements OnInit {
     document.getElementById('btnClose').click();
   }
   updateTalla(id){
+    this.accion = 'actualizada'
     this._tallaService.update(id, this.talla).subscribe(
       response => {
         if(response.status == 'success'){
@@ -95,6 +101,36 @@ export class TallaComponent implements OnInit {
         this.status = 'error';
       }
     )
+  }
+  deleteTalla(tall){
+    if(confirm('Seguro de eliminar')){
+      
+      this._tallaService.delete(tall.id).subscribe(
+        response => {
+          if(response.status == 'success'){
+            this.accion = 'eliminada';
+            this.status = 'success';
+            this.getTallas();
+          } else {
+            console.log(response.message);
+            this.status = 'error';
+          }
+        },
+        error => {
+          console.log(error);
+          this.status = 'error';
+        }
+      )
+    }
+  }
+
+  calcularPagina(pageActual){
+    if(pageActual == 2){
+      pageActual += 7;
+    } else {
+      pageActual = 1;
+    }
+
   }
 
 }

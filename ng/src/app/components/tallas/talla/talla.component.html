@@ -3,10 +3,10 @@
 <p>Aqui puedes ver las tallas disponibles</p>
 
 <div class="alert alert-success" role="alert" *ngIf="status == 'success'">
-  <strong>La talla fue actualizada correctamente...</strong>
+  <strong>La talla fue {{accion}} correctamente...</strong>
 </div>
 <div class="alert alert-danger" role="alert" *ngIf="status == 'error'">
-    <strong>La talla fue actualizada correctamente...</strong>
+    <strong>La talla no pudo ser {{accion}} </strong>
 </div>
 
 <!-- Button trigger modal -->
@@ -52,7 +52,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let tall of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
+    <tr id="paginacion" *ngFor="let tall of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{tall.name}}</td>
       <td>
@@ -60,11 +60,11 @@
           Editar
         </button>
         <!--<a href="#" class="btn btn-warning mr-3">Editar</a>-->
-        <a href="#" class="btn btn-danger">Borrar</a>
+        <button class="btn btn-danger" (click)="deleteTalla(tall)">Eliminar</button>
       </td>
     </tr>        
   </tbody>
-</table>
+</table> <!--(pageChange)="pageActual = $event"-->
 <pagination-controls class="text-center" (pageChange)="pageActual = $event"></pagination-controls>
 
 <button class="btn btn-dark" [routerLink]="['/inicio']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Volver </button>

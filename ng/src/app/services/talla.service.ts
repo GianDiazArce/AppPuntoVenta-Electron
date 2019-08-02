@@ -42,5 +42,11 @@ export class TallaService {
 
         return this._http.put(this.url + 'talla/' + id, params, {headers});
     }
+
+    delete(id):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.delete(this.url + 'talla/'+id, {headers});
+    }
     
 }
