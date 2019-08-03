@@ -1,16 +1,16 @@
 <p class="h2">Tipos</p>
 <p class="p">Aqui estaran los tipos de prendas. Por ejemplo (casaca, chompa manga larga, etc).</p>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModal">
+<button type="button" class="btn btn-success" (click)=add() data-toggle="modal" data-target="#tipoModal">
   <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nuevo tipo
 </button>
 
 <!-- Modal -->
-<div class="modal fade" id="exampleModal"  tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="tipoModal"  tabindex="-1" role="dialog" aria-labelledby="tipoModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+        <h5 class="modal-title" id="tipoModalLabel">{{modal_title}}</h5>
         <button type="button" class="close" id="btnClose" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -19,11 +19,12 @@
         <form #newTipo="ngForm" (ngSubmit)="onSubmit(newTipo)">
           <div class="form-group">
             <label for="name">Nombre</label>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="tipo.name" class="form-control" aria-describedby="helpId">
-            <small id="helpId" class="text-muted">Help text</small>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="tipo.name" class="form-control" aria-describedby="helpId" required>
+            <small id="helpId" class="text-muted">(casaca, chompa manga larga, etc)</small>
           </div>
 
-          <button type="submit"  class="btn btn-primary">Crear</button>
+          <button type="submit"  class="btn btn-primary" [disabled]="!newTipo.valid" *ngIf="!update">{{btnForm}}</button>
+          <button type="button" (click)="updateTipo(tipo)" *ngIf="update"  class="btn btn-primary" [disabled]="!newTipo.valid">{{btnForm}}</button>
         </form>
       </div>
       
@@ -42,9 +43,9 @@
     <tr *ngFor="let tip of tipos | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{tip.name}}</td>
-      <td>
-        <a href="#" class="btn btn-warning mr-3">Editar</a>
-        <a href="#" class="btn btn-danger">Borrar</a>
+      <td>        
+        <button class="btn btn-warning mr-3" data-toggle="modal" data-target="#tipoModal" (click)="preUpdateTipo(tip)" >Editar</button>
+        <button (click)="deleteTipo(tip)" class="btn btn-danger">Borrar</button>
       </td>
     </tr>    
   </tbody>

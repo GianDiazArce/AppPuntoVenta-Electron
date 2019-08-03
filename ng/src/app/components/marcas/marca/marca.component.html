@@ -27,8 +27,8 @@
             <label for="name">Nombre</label>
             <input type="text" name="name" #name="ngModel" [(ngModel)]="marca.name" class="form-control col-md-8" required>            
           </div>
-          <input type="submit" class="btn btn-primary float-right" [disabled]="!newMarca.valid" *ngIf="!update" value="Crear">
-          <input type="button" (click)="updateMarca(marca.id)" class="btn btn-primary float-right" [disabled]="!newMarca.valid" *ngIf="update" value="Actualizar">
+          <input type="submit" class="btn btn-primary" [disabled]="!newMarca.valid" *ngIf="!update" value="Crear">
+          <input type="button" (click)="updateMarca(marca.id)" class="btn btn-primary" [disabled]="!newMarca.valid" *ngIf="update" value="Actualizar">
         </form>
       </div>
       
