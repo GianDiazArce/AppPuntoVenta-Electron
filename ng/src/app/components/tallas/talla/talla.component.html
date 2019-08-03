@@ -52,6 +52,7 @@
     </tr>
   </thead>
   <tbody>
+    <!-- <tr id="paginacion" *ngFor="let tall of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index"> -->
     <tr id="paginacion" *ngFor="let tall of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{tall.name}}</td>

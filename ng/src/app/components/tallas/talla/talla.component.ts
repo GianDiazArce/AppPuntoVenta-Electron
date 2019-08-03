@@ -124,13 +124,6 @@ export class TallaComponent implements OnInit {
     }
   }
 
-  calcularPagina(pageActual){
-    if(pageActual == 2){
-      pageActual += 7;
-    } else {
-      pageActual = 1;
-    }
-
-  }
+  
 
 }

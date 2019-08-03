@@ -4,17 +4,20 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success mb-3" id="btnClose" data-toggle="modal" data-target="#newMarca">
+<button type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#newMarca">
   <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nueva Marca
 </button>
+
+<p class="p page_actual">Pagina {{pageActual}}</p>
 
 <!-- Modal -->
 <div class="modal fade" id="newMarca" tabindex="-1" role="dialog" aria-labelledby="newMarcaLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="newMarcaLabel">Agregar nueva Marca</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <h5 class="modal-title" id="newMarcaLabel" *ngIf="!update">Agregar nueva Marca</h5>
+        <h5 class="modal-title" id="newMarcaLabel" *ngIf="update">Editar Marca</h5>
+        <button type="button" class="close" id="btnClose" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
@@ -22,10 +25,10 @@
         <form #newMarca="ngForm" (ngSubmit)="onSubmit(newMarca)" class="">
           <div class="form-group">
             <label for="name">Nombre</label>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="marca.name" class="form-control col-md-8">
-            
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="marca.name" class="form-control col-md-8" required>            
           </div>
-          <input type="submit" class="btn btn-primary float-right" value="Crear">
+          <input type="submit" class="btn btn-primary float-right" [disabled]="!newMarca.valid" *ngIf="!update" value="Crear">
+          <input type="button" (click)="updateMarca(marca.id)" class="btn btn-primary float-right" [disabled]="!newMarca.valid" *ngIf="update" value="Actualizar">
         </form>
       </div>
       
@@ -42,23 +45,17 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let marc of marcas; index as i">
+    <tr *ngFor="let marc of marcas | paginate: {itemsPerPage: 7, currentPage: pageActual, totalItems: this.numberOfElements} ; index as i">
       <td scope="row">{{i+1}}</td>
       <td scope="row">{{marc.name}}</td>
       <td>
-        <a href="#" class="btn btn-warning mr-3">Editar</a>
-        <a href="#" class="btn btn-danger">Borrar</a>
+        <button class="btn btn-warning mr-2" data-toggle="modal" data-target="#newMarca" (click)="preUpdateMarca(marc)">Editar</button>
+        <button class="btn btn-danger" (click)="delete(marc)" >Eliminar</button>
       </td>
     </tr>        
   </tbody>
 </table>
 
-<ul class="pagination">
-  <li><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-</ul>
+<pagination-controls class="text-center" (pageChange)="pageActual = $event"></pagination-controls>
 
 <button class="btn btn-dark" [routerLink]="['/inicio']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Volver </button>
