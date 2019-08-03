@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModeloService } from 'src/app/services/modelo.service';
+import { Modelo } from 'src/app/models/modelo';
 
 @Component({
   selector: 'app-modelo',
@@ -10,10 +11,13 @@ import { ModeloService } from 'src/app/services/modelo.service';
 export class ModeloComponent implements OnInit {
 
   public modelos;
+  public modelo: Modelo;
 
   constructor(
     private _modeloService: ModeloService
-  ) { }
+  ) { 
+    this.modelo = new Modelo(1, 0, 0, 0, '', 0);
+  }
 
   ngOnInit() {
     this.getModelos();
@@ -32,6 +36,24 @@ export class ModeloComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+  onSubmit(form){
+    this._modeloService.save(this.modelo).subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.getModelos();
+          this.closeModal();
+        } else {
+          console.log(response.message);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
+  }
+  closeModal(){
+    document.getElementById('btnClose').click();
   }
 
 }

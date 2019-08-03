@@ -15,5 +15,29 @@ export class ModeloService {
 
         return this._http.get(this.url + 'modelo', {headers});
     }
+    getModelo(id): Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.get(this.url + 'modelo', {headers});
+    }
+    save(modelo): Observable<any> {
+        let params = "json=" + JSON.stringify(modelo);
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.post(this.url + 'modelo', params, {headers});
+    }
+    update(id, modelo): Observable<any>{
+        let params = "json=" + JSON.stringify(modelo);
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.put(this.url + 'modelo/' + id, params, {headers});
+    }
+    delete(id): Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.delete(this.url + 'modelo/' + id, {headers});
+    }
     
 }

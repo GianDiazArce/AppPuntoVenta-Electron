@@ -1,9 +1,75 @@
 <p class="h2">Modelos</p>
 <p class="p">Aquí estan los modelos registrados</p>
 
-<button class="btn btn-success mb-3">
-  <i class="fa fa-plus mr-1" aria-hidden="true"></i> Crear nuevo modelo
+<!-- Button trigger modal -->
+<button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#newModel">
+    <i class="fa fa-plus mr-1" aria-hidden="true"></i> Crear nuevo modelo
 </button>
+
+<!-- Modal -->
+<div class="modal fade" id="newModel" tabindex="-1" role="dialog" aria-labelledby="newModelLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="newModelLabel">Modal title</h5>
+        <button type="button" class="close" id="btnClose" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form #newModelo="ngForm" class="row" (ngSubmit)="onSubmit(newModelo)">
+          <div class="form-group col-md-6 col-sm-12">
+            <label for="name">Nombre</label>
+            <input type="text" name="name" #name="ngModel" [(ngModel)]="modelo.name" class="form-control" aria-describedby="helpId" required>
+            <small id="helpId" class="text-muted">Help text</small>
+          </div>       
+             
+          <div class="form-group col-md-6 col-sm-12">
+            <label for="tipo_id">Tipo</label>
+            <select class="form-control" name="tipo_id" #tipo_id="ngModel" [(ngModel)]="modelo.tipo_id" required>
+              <option value="0">Seleccione una opcion</option>
+              <option value="1">Option 1</option>
+              <option value="2">Option 2</option>
+              <option value="3">Option 3</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-12">
+            <label for="marca_id">Marca</label>
+            <select class="form-control" name="marca_id" #marca_id="ngModel" [(ngModel)]="modelo.marca_id" required>
+              <option value="0">Seleccione una opcion</option>
+              <option value="1">Marca1</option>
+              <option value="2">Marca2</option>
+              <option value="3">Marca3</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-12">
+            <label for="talla_id">Talla</label>
+            <select class="form-control" name="talla_id" #talla_id="ngModel" [(ngModel)]="modelo.talla_id" required>
+              <option value="0">Seleccione una opcion</option>
+              <option value="1">Talla 1</option>
+              <option value="2">Talla 2</option>
+              <option value="3">Talla 3</option>
+            </select>
+          </div>
+
+          <div class="form-group col-md-6 col-sm-12 offset-md-3">
+            <label for="stock">Stock</label>
+            <input type="number" name="stock" #stock="ngModel" [(ngModel)]="modelo.stock" class="form-control" placeholder="stock" aria-describedby="helpStock" required>
+            <small id="helpStock" class="text-muted">Aqui ingrese cuantas unidades de este modelo ingresarán a su inventario ej: (2, 4, 10, 25, etc).</small>
+          </div>
+          
+          <div class="col-12">
+            <button type="submit" class="btn btn-success"
+             [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0 || modelo.tipo_id == 0 || modelo.stock == 0 ">Crear
+            </button>
+          </div>
+        </form>
+      </div>      
+    </div>
+  </div>
+</div>
 
 <table class="table">
   <thead>
@@ -18,7 +84,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let model of modelos; let i = index">
+    <tr *ngFor="let model of modelos | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{model.name}}</td>
       <td>{{model.marca.name}}</td>
@@ -26,9 +92,10 @@
       <td>{{model.talla.name}}</td>
       <td>{{model.stock}}</td>
       <td>
-        <a href="#" class="btn btn-warning mr-3">Editar</a>
+        <button class="btn btn-warning mr-2" (click)="preUpdate(model)" data-toggle="modal" data-target="#newModel">Editar</button>        
         <a href="#" class="btn btn-danger">Borrar</a>
       </td>
     </tr>    
   </tbody>
 </table>
+<pagination-controls class="text-center" (pageChange)="pageActual = $event"></pagination-controls>
