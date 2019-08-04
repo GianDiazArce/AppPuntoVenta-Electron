@@ -18,7 +18,7 @@ export class ModeloService {
     getModelo(id): Observable<any>{
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
 
-        return this._http.get(this.url + 'modelo', {headers});
+        return this._http.get(this.url + 'modelo/' + id, {headers});
     }
     save(modelo): Observable<any> {
         let params = "json=" + JSON.stringify(modelo);
