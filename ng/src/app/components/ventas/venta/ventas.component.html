@@ -1,3 +1,37 @@
-<p>
-  ventas works!
-</p>
+<form>
+  <div class="form-group">
+    <div class='input-group date' id='datetimepicker4'>
+      <input type='date' class="form-control" />
+      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
+      </span>
+    </div>
+
+    <input type="date" class="form-control">
+
+  </div>
+</form>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Usuario</th>
+      <th>Total</th>
+      <th>Descuento</th>
+      <th>Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let vent of ventas ; let i = index">
+      <td scope="row">{{i+1}}</td>
+      <td>{{vent.user.name}}</td>
+      <td>{{vent.total}}</td>
+      <td>{{vent.discount}}</td>
+      <td>
+        <button class="btn btn-info mr-2">Ver detalles</button>
+        <button class="btn btn-warning mr-2">Editar</button>
+        <button class="btn btn-danger">Eliminar</button>
+      </td>
+    </tr>    
+  </tbody>
+</table>
