@@ -39,5 +39,7 @@ export class ModeloService {
 
         return this._http.delete(this.url + 'modelo/' + id, {headers});
     }
+
+    //getTallsaByModelo(){}
     
 }

@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>#</th>
+      <th>Modelo</th>
+      <th>Cantidad</th>
+      <th>Precio</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let dvs of detalleVentas; index as i">
+      <td scope="row">{{i+1}}</td>
+      <td>{{dvs.modelo.name}}</td>
+      <td>{{dvs.quantity}}</td>
+      <td>{{dvs.price}}</td>
+    </tr>
+  </tbody>
+</table>
+
+<button class="btn btn-dark" [routerLink]="['/ventas']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Volver </button>

@@ -1,23 +1,12 @@
-<form>
-  <div class="form-group">
-    <div class='input-group date' id='datetimepicker4'>
-      <input type='date' class="form-control" />
-      <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span>
-      </span>
-    </div>
-
-    <input type="date" class="form-control">
-
-  </div>
-</form>
-
-<table class="table">
+<p class="h2">Ventas</p>
+<table class="table mt-3 text-center">
   <thead>
     <tr>
       <th>#</th>
       <th>Usuario</th>
-      <th>Total</th>
+      <th>Total (S/.)</th>
       <th>Descuento</th>
+      <th>Fecha</th>
       <th>Acciones</th>
     </tr>
   </thead>
@@ -25,10 +14,11 @@
     <tr *ngFor="let vent of ventas ; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{vent.user.name}}</td>
-      <td>{{vent.total}}</td>
+      <td>S/{{vent.total}}</td>
       <td>{{vent.discount}}</td>
+      <td>{{vent.created_at}}</td>
       <td>
-        <button class="btn btn-info mr-2">Ver detalles</button>
+        <button class="btn btn-info mr-2" [routerLink]="['/detalle-venta', vent.id]" >Ver detalles</button>
         <button class="btn btn-warning mr-2">Editar</button>
         <button class="btn btn-danger">Eliminar</button>
       </td>
