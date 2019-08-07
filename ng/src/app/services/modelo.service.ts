@@ -40,6 +40,16 @@ export class ModeloService {
         return this._http.delete(this.url + 'modelo/' + id, {headers});
     }
 
-    //getTallsaByModelo(){}
+    getMarcasByTipo(id): Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        //http://api-puntodeventa.com.devel/api/modelo/tipo/1
+        return this._http.get(this.url + 'modelo/tipo/' + id, {headers});
+    }
+    getModeloByTipoAndMarca(tipo_id, marca_id): Observable<any>{
+
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.get(this.url + 'modelo/'+ tipo_id +'/' + marca_id, {headers})
+    }
     
 }
