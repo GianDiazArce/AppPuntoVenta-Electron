@@ -14,33 +14,37 @@
       <label for="marca">Marca</label>
       <select class="form-control" name="marca"(change)="cboMarcaChange($event)">
         <option>Seleccione una marca</option>
-        <option  *ngFor="let marca of marcas" value="{{marca.marca.id}}" >{{marca.marca.name}}</option>
+        <option  *ngFor="let marca of marcas" value="{{marca.id}}" >{{marca.name}}</option>
       </select>
     </div>
-  </div>
 
-  <div class="row">    
-    <div class="form-group col-md-3 ">
+    <div class="form-group col-md-6 ">
       <label for="model">Modelo</label>
-      <select class="form-control" name="model" (change)="cboSelectChange($event)">
+      <select class="form-control" name="model" (change)="cboModeloChange($event)">
         <option value="0">Seleccione un modelo</option>
         <option value="{{modelo.id}}"  *ngFor="let modelo of modelos">{{modelo.name}} - {{modelo.talla.name}} - ({{modelo.stock}})</option>
       </select>
-    </div>    
-    
-    <div class="form-group col-md-3">
-      <label for="quantity">Cantidad</label>
-      <input type="number" name="quantity"  class="form-control" >
-    </div>
+    </div>   
+  </div>
 
-    <div class="form-group col-md-3">
-      <label for="price">Precio (unidad)</label>
-      <input type="number" name="price"  class="form-control" >
-    </div>
-    <div class="col d-flex align-items-center pb-sm-3 pb-3 pb-lg-0 pt-2">
-      <button class="btn btn-info">Agregar</button> 
-      <button class="btn btn-dark ml-2" (click)="limpiarTabla()" id="limpiaTabla"> <i class="fa fa-times" aria-hidden="true"></i> Limpiar</button>
-    </div>
+  <div class="row">    
+         
+    
+  </div>
+  <div class="row">
+      <div class="form-group col-md-3">
+          <label for="quantity">Cantidad</label>
+          <input type="number" name="quantity"  class="form-control" >
+        </div>
+    
+        <div class="form-group col-md-3">
+          <label for="price">Precio (unidad)</label>
+          <input type="number" name="price"  class="form-control" >
+        </div>
+        <div class="col d-flex align-items-center pb-sm-3 pb-3 pb-lg-0 pt-2">
+          <button class="btn btn-info">Agregar</button> 
+          <button class="btn btn-dark ml-2" (click)="limpiarTabla()" id="limpiaTabla"> <i class="fa fa-times" aria-hidden="true"></i> Limpiar</button>
+        </div>
   </div>
   
 </form>

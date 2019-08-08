@@ -15,9 +15,11 @@ export class GenerarVentaComponent implements OnInit {
   public modelos;
   public tipos;
   public marcas: any;
+  options;
   constructor(
     private _modeloService: ModeloService,
-    private _tipoService: TipoService
+    private _tipoService: TipoService,
+    private _marcaService: MarcaService
   ) { 
 
   }
@@ -25,7 +27,7 @@ export class GenerarVentaComponent implements OnInit {
   ngOnInit() {
     this.getTipos();    
   } 
-  cboSelectChange(event){
+  cboModeloChange(event){
     let newVal = event.target.value;
     console.log(newVal);    
   }
@@ -39,19 +41,17 @@ export class GenerarVentaComponent implements OnInit {
       }
     )
   }
-  cboTipoChange(event){
-    localStorage.removeItem('tipo_id');
-    let newVal =  event.target.value;    
+  cboTipoChange(event){    
+    let newVal =  event.target.value;
     this.getMarcasByTipo(newVal);
-    localStorage.setItem('tipo_id', newVal);
     
   }
-  getMarcasByTipo(id){
-    this._modeloService.getMarcasByTipo(id).subscribe(
+  getMarcasByTipo(tipo_id){
+    this._marcaService.getMarcaByTipo(tipo_id).subscribe(
       response => {
-        this.marcas = response.modelos;
-        console.log(this.marcas);
-        
+        if(response.status == 'success'){
+          this.marcas = response.marcas;
+        }
       },
       error => {
         console.log(error);
@@ -59,17 +59,22 @@ export class GenerarVentaComponent implements OnInit {
     )
   }
   cboMarcaChange(event){
-    let tipo_id = localStorage.getItem('tipo_id');
     let newVal = event.target.value;
-    this._modeloService.getModeloByTipoAndMarca(tipo_id, newVal).subscribe(
+    this.getModelosByMarca(newVal);
+    
+  }
+  getModelosByMarca(marca_id){
+    this._modeloService.getModeloByMarca(marca_id).subscribe(
       response => {
-        this.modelos = response.modelos;
-        console.log(this.modelos);
+        if(response.status == 'success'){
+          this.modelos = response.modelos;
+        }
       },
       error => {
         console.log(error);
       }
-    )
+    );
   }
+  
 
 }

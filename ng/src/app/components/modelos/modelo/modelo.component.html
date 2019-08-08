@@ -27,19 +27,13 @@
             <small id="helpId" class="text-muted">Help text</small>
           </div>       
              
-          <div class="form-group col-md-6 col-sm-12">
-            <label for="tipo_id">Tipo</label>
-            <select class="form-control" name="tipo_id" #tipo_id="ngModel" [(ngModel)]="modelo.tipo_id" required>
-              <option value="0">Seleccione una opcion</option>
-              <option value="{{tipo.id}}" *ngFor="let tipo of tipos">{{tipo.name}}</option>
-            </select>
-          </div>
+          
 
           <div class="form-group col-md-6 col-sm-12">
             <label for="marca_id">Marca</label>
             <select class="form-control" name="marca_id" #marca_id="ngModel" [(ngModel)]="modelo.marca_id" required>
               <option value="0">Seleccione una opcion</option>
-              <option value="{{marca.id}}" *ngFor="let marca of marcas">{{marca.name}}</option>
+              <option value="{{marca.id}}" *ngFor="let marca of marcas">{{marca.name}} - {{marca.tipo.name}}</option>
             </select>
           </div>
 
@@ -51,7 +45,7 @@
             </select>
           </div>
 
-          <div class="form-group col-md-6 col-sm-12 offset-md-3">
+          <div class="form-group col-md-6 col-sm-12 ">
             <label for="stock">Stock</label>
             <input type="number" name="stock" #stock="ngModel" [(ngModel)]="modelo.stock" class="form-control" placeholder="stock" aria-describedby="helpStock" required>
             <small id="helpStock" class="text-muted">Aqui ingrese cuantas unidades de este modelo ingresarán a su inventario ej: (2, 4, 10, 25, etc).</small>
@@ -59,11 +53,11 @@
           
           <div class="col-12">
             <button type="submit" class="btn btn-success" *ngIf="!update"
-             [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0 || modelo.tipo_id == 0 || modelo.stock == 0 ">
+             [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0  || modelo.stock == 0 ">
              {{btnForm}}
             </button>
-            <button type="button" class="btn btn-success" *ngIf="update" (click)="updateModel()"
-             [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0 || modelo.tipo_id == 0 || modelo.stock == 0 ">
+            <button type="button" class="btn btn-success" *ngIf="update" (click)="updateModel(modelo.id)"
+             [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0 || modelo.stock == 0 ">
              {{btnForm}}
             </button>
           </div>
@@ -79,7 +73,6 @@
       <th>#</th>
       <th>Nombre</th>
       <th>Marca</th>
-      <th>Tipo</th>
       <th>Talla</th>
       <th>Stock</th>
       <th>Acciones</th>
@@ -90,7 +83,6 @@
       <td scope="row">{{i+1}}</td>
       <td>{{model.name}}</td>
       <td>{{model.marca.name}}</td>
-      <td>{{model.tipo.name}}</td>
       <td>{{model.talla.name}}</td>
       <td>{{model.stock}}</td>
       <td>

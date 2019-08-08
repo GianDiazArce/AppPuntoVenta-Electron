@@ -48,5 +48,10 @@ export class MarcaService {
 
         return this._http.delete(this.url + 'marca/' + id, {headers});
     }
+    getMarcaByTipo(id): Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.get(this.url + 'marca/tipo/' + id, {headers});
+    }
     
 }

@@ -1,35 +1,51 @@
 import { Component, OnInit } from '@angular/core';
 import { MarcaService } from 'src/app/services/marca.service';
 import { Marca } from 'src/app/models/marca';
+import { TipoService } from 'src/app/services/tipo.service';
 
 @Component({
   selector: 'app-marca',
   templateUrl: './marca.component.html',
   styleUrls: ['./marca.component.css'],
-  providers: [MarcaService]
+  providers: [MarcaService, TipoService]
 })
 export class MarcaComponent implements OnInit {
 
   public marcas;
   public marca:Marca;
   private update;
+  public tipos;
 
   pageActual: number = 1;
 
   constructor(
-    private _marcaService: MarcaService
+    private _marcaService: MarcaService,
+    private _tipoService: TipoService
   ) {
-    this.marca = new Marca(1,'');
+    this.marca = new Marca(1,0,'');
     this.update = null;
    }
 
   ngOnInit() {
     this.getMarcas();
+    this.getTipos();
   }
   
   add(){
     this.update = null
     this.marca.name = ''
+  }
+  getTipos(){
+    this._tipoService.getTipos().subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.tipos = response.tipos;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }  
   getMarcas(){
     this._marcaService.getMarcas().subscribe(

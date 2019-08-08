@@ -16,7 +16,7 @@ export class ModeloComponent implements OnInit {
   public modelos;
   public modelo: Modelo;
 
-  public tipos;
+  
   public marcas;
   public tallas;
 
@@ -26,11 +26,10 @@ export class ModeloComponent implements OnInit {
 
   constructor(
     private _modeloService: ModeloService,
-    private _marcaService: MarcaService,
-    private _tallaService: TallaService,
-    private _tipoService: TipoService
+    private _marcaService: MarcaService, 
+    private _tallaService: TallaService
   ) { 
-    this.modelo = new Modelo(1, 0, 0, 0, '', 0);
+    this.modelo = new Modelo(1, 0, 0, '', 0);
   }
 
   ngOnInit() {
@@ -57,21 +56,10 @@ export class ModeloComponent implements OnInit {
         console.log(err);
       }
     );
-    this._tipoService.getTipos().subscribe(
-      response => {
-        if(response.status == 'success'){
-          this.tipos = response.tipos;
-        } else {
-          console.log(response.error);
-        }
-      },
-      error => {
-        console.log(error);
-      }
-    )
+    
   }
   add(){
-    this.modelo = new Modelo(1, 0, 0, 0, '', 0);
+    this.modelo = new Modelo(1,0,0,'',0);
     this.update = null;
     this.btnForm = 'Crear';
     this.modal_title = 'Crear nuevo modelo';
@@ -123,8 +111,20 @@ export class ModeloComponent implements OnInit {
       }
     )
   }
-  updateModel(){
-    console.log('hola');
+  updateModel(id){
+    this._modeloService.update(id, this.modelo).subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.getModelos();
+          this.closeModal();
+        } else {
+          console.log(response.message);
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
   }
   deleteModel(model){
     if(confirm('Desea eliminar el modelo - '+ model.name)){
