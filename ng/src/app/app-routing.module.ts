@@ -11,6 +11,7 @@ import { MarcaComponent } from './components/marcas/marca/marca.component';
 import { ModeloComponent } from './components/modelos/modelo/modelo.component';
 import { VentasComponent } from './components/ventas/venta/ventas.component';
 import { DetalleVentaComponent } from './components/ventas/detalle-venta/detalle-venta.component';
+import { LoginComponent } from './components/user/login/login.component';
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -27,6 +28,9 @@ const routes: Routes = [
   
   {path: 'tipo', component:TipoComponent},
   {path: 'modelo', component:ModeloComponent},
+
+  {path: 'login', component:LoginComponent},
+  {path: 'logout/:sure', component:LoginComponent},
 
   {path: '**', component: ErrorComponent}
 ];

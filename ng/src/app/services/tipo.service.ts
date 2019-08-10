@@ -32,16 +32,16 @@ export class TipoService {
         
         return this._http.post(this.url + 'tipo', params, {headers});
     }
-    update(id, tipo):Observable<any>{
+    update(id, tipo, token):Observable<any>{
 
         let params = "json=" + JSON.stringify(tipo);
 
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);;
         
         return this._http.put(this.url + 'tipo/' + id, params, {headers});
     }
-    delete(id):Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    delete(id, token):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);;
 
         return this._http.delete(this.url + 'tipo/' + id, {headers});
     }

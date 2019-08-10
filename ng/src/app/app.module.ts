@@ -21,6 +21,12 @@ import { MarcaComponent } from './components/marcas/marca/marca.component';
 import { GenerarVentaComponent } from './components/ventas/generar-venta/generar-venta.component';
 import { VentasComponent } from './components/ventas/venta/ventas.component';
 import { DetalleVentaComponent } from './components/ventas/detalle-venta/detalle-venta.component';
+import { LoginComponent } from './components/user/login/login.component';
+
+
+
+import { LocalStorageServie, StorageService } from "./services/storage.service";
+import { VentaService } from './services/venta.service';
 
 @NgModule({
   declarations: [
@@ -33,7 +39,8 @@ import { DetalleVentaComponent } from './components/ventas/detalle-venta/detalle
     MarcaComponent,
     GenerarVentaComponent,
     VentasComponent,
-    DetalleVentaComponent
+    DetalleVentaComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -42,7 +49,15 @@ import { DetalleVentaComponent } from './components/ventas/detalle-venta/detalle
     FormsModule,
     NgxPaginationModule
   ],
-  providers: [],
+  providers: [
+    LocalStorageServie,
+    { provide: StorageService, useClass: LocalStorageServie },
+    {
+      deps: [StorageService],
+      provide: VentaService,
+      useClass: VentaService
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

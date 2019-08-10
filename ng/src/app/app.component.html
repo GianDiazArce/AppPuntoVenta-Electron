@@ -9,17 +9,17 @@
     <div class="collapse navbar-collapse" id="collapsibleNavId">
       <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/inicio']" routerLinkActive="active">Inicio</a>
+          <a class="nav-link" [routerLink]="['/inicio']"  routerLinkActive="active">Inicio</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/generar-venta']" routerLinkActive="active">Generar Venta</a>
+          <a class="nav-link" [routerLink]="['/generar-venta']" *ngIf="identity" routerLinkActive="active">Generar Venta</a>
         </li>
         
         <li class="nav-item">
-          <a class="nav-link" [routerLink]="['/ventas']" routerLinkActive="active">Ventas</a>
+          <a class="nav-link" [routerLink]="['/ventas']" routerLinkActive="active" *ngIf="rol && rol=='ROLE_USER'">Ventas</a>
         </li>
         
-        <li class="nav-item dropdown">
+        <li class="nav-item dropdown" *ngIf="identity">
           <a class="nav-link dropdown-toggle" href="#" id="dropdownId" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Inventario</a>
           <div class="dropdown-menu" aria-labelledby="dropdownId">
             <a class="dropdown-item" [routerLink]="['/talla']" routerLinkActive="active" >Tallas</a>
@@ -33,14 +33,16 @@
       </ul>
       <ul class="navbar-nav nav-right">
         <li class="nav-item">
-          <a class="nav-link" href="#">Identificarse</a>
+          <a class="nav-link" [routerLink]="['/login']" routerLinkActive="active" *ngIf="!identity">Identificarse</a>
         </li>
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="identidad" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Nombre</a>
+        <li class="nav-item dropdown" *ngIf="identity && identity.name">
+          <a class="nav-link dropdown-toggle" href="#" id="identidad" data-toggle="dropdown" aria-haspopup="true"  aria-expanded="false">{{identity.name}}</a>
           <div class="dropdown-menu" aria-labelledby="identidad">
             <a class="dropdown-item" href="#">Action 1</a>
-            <a class="dropdown-item" href="#">Action 2</a>
           </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="['/logout/1']"  *ngIf="identity">Cerrar Sesion</a>
         </li>
       </ul>
     </div>

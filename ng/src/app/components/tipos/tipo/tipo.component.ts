@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { TipoService } from 'src/app/services/tipo.service';
 import { Tipo } from 'src/app/models/tipo';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-tipo',
   templateUrl: './tipo.component.html',
   styleUrls: ['./tipo.component.css'],
-  providers: [TipoService]
+  providers: [TipoService, UserService]
 })
 export class TipoComponent implements OnInit {
 
@@ -16,11 +17,17 @@ export class TipoComponent implements OnInit {
   private update = null;
   public modal_title: string;
   public btnForm;
+  // Revisando identificacion del usuario
+  public token;
+  public role;
 
   constructor(
-    private _tipoService: TipoService
+    private _tipoService: TipoService,
+    private _userService: UserService
   ) {
-    this.tipo = new Tipo(1,'');    
+    this.tipo = new Tipo(1,'');  
+    this.token = this._userService.getToken(); 
+    this.role = this._userService.getRol();
    }
 
   ngOnInit() {
@@ -87,7 +94,7 @@ export class TipoComponent implements OnInit {
   }
 
   updateTipo(tipo){
-    this._tipoService.update(tipo.id, this.tipo).subscribe(
+    this._tipoService.update(tipo.id, this.tipo, this.token).subscribe(
       response => {
         if(response.status == 'success'){
           this.getTipos();
@@ -103,7 +110,7 @@ export class TipoComponent implements OnInit {
   }
   deleteTipo(tip){
     if(confirm('¿Está seguro de eliminar ' + tip.name)){
-      this._tipoService.delete(tip.id).subscribe(
+      this._tipoService.delete(tip.id, this.token).subscribe(
         response => {
           if(response.status == 'success'){
             this.getTipos();

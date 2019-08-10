@@ -36,14 +36,14 @@
     <tr>
       <th>#</th>
       <th>Nombre</th>
-      <th>Acciones</th>
+      <th *ngIf="role && role=='ROLE_ADMIN'">Acciones</th>
     </tr>
   </thead>
   <tbody>
     <tr *ngFor="let tip of tipos | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{tip.name}}</td>
-      <td>        
+      <td *ngIf="role && role=='ROLE_ADMIN'">        
         <button class="btn btn-warning mr-3" data-toggle="modal" data-target="#tipoModal" (click)="preUpdateTipo(tip)" >Editar</button>
         <button (click)="deleteTipo(tip)" class="btn btn-danger">Borrar</button>
       </td>
