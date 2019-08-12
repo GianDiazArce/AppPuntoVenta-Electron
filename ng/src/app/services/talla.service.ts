@@ -22,11 +22,11 @@ export class TallaService {
         return this._http.get(this.url + 'talla', {headers})
     }
 
-    save(talla):Observable<any>{
+    save(talla, token):Observable<any>{
 
         let params = "json=" + JSON.stringify(talla);
 
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.post(this.url + 'talla', params, {headers});
     }
@@ -36,15 +36,15 @@ export class TallaService {
 
         return this._http.get(this.url + 'talla/' + id, {headers});
     }
-    update(id,talla):Observable<any>{
+    update(id,talla, token):Observable<any>{
         let params = "json="+ JSON.stringify(talla);
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.put(this.url + 'talla/' + id, params, {headers});
     }
 
-    delete(id):Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    delete(id, token):Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.delete(this.url + 'talla/'+id, {headers});
     }

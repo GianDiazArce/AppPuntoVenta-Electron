@@ -10,7 +10,7 @@
 </div>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#exampleModal">
+<button *ngIf="role && role=='ROLE_ADMIN'" type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#exampleModal">
   <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nueva talla
 </button>
 
@@ -48,7 +48,7 @@
     <tr>
       <th>#</th>
       <th>Talla</th>
-      <th>Acciones</th>
+      <th *ngIf="role && role=='ROLE_ADMIN'">Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -56,7 +56,7 @@
     <tr id="paginacion" *ngFor="let tall of tallas | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
       <td scope="row">{{i+1}}</td>
       <td>{{tall.name}}</td>
-      <td>
+      <td *ngIf="role && role=='ROLE_ADMIN'">
         <button type="button" class="btn btn-warning mr-3" (click)="preUpdateTalla(tall)" data-toggle="modal" data-target="#exampleModal">
           Editar
         </button>

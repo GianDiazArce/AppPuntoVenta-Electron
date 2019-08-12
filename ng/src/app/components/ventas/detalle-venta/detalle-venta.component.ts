@@ -1,19 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { VentaService } from 'src/app/services/venta.service';
 import { ActivatedRoute } from '@angular/router';
+import { SaleService } from 'src/app/services/sale.service';
 
 @Component({
   selector: 'app-detalle-venta',
   templateUrl: './detalle-venta.component.html',
   styleUrls: ['./detalle-venta.component.css'],
-  providers: [VentaService]
+  providers: [SaleService]
 })
 export class DetalleVentaComponent implements OnInit {
 
   public detalleVentas;
 
   constructor(
-    private _ventaService: VentaService,
+    private _saleService: SaleService,
     private _route: ActivatedRoute 
   ) {
 
@@ -26,7 +26,7 @@ export class DetalleVentaComponent implements OnInit {
     this._route.params.subscribe(
       params => {
         let id = params.id;
-        this._ventaService.getDetalleVentas(id).subscribe(
+        this._saleService.getDetalleVentas(id).subscribe(
           response => {
             if(response.status == 'success'){
               this.detalleVentas = response.detalleVentas;

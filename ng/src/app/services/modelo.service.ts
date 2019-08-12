@@ -20,22 +20,22 @@ export class ModeloService {
 
         return this._http.get(this.url + 'modelo/' + id, {headers});
     }
-    save(modelo): Observable<any> {
+    save(modelo, token): Observable<any> {
         let params = "json=" + JSON.stringify(modelo);
 
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.post(this.url + 'modelo', params, {headers});
     }
-    update(id, modelo): Observable<any>{
+    update(id, modelo, token): Observable<any>{
         let params = "json=" + JSON.stringify(modelo);
 
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.put(this.url + 'modelo/' + id, params, {headers});
     }
-    delete(id): Observable<any> {
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    delete(id, token): Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.delete(this.url + 'modelo/' + id, {headers});
     }

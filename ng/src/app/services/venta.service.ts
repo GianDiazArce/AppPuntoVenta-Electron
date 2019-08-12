@@ -42,35 +42,14 @@ export class VentaService {
           });
     }
 
-    getVentas(): Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    
 
-        return this._http.get(this.url + 'venta', {headers});
-    }
-
-    getDetalleVentas(id): Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
-
-        return this._http.get(this.url + 'detalle-venta/venta/' + id, {headers})
-    }
+    
 
     // Indentando hacer el carrito
     public get(): Observable<ShoppingCart> {
         return this.subscriptionObservable;
     }
-
-    /*
-    addProduct(model, cant, price): void{
-        let sc = {'modelo' : model, 'quantity': cant, 'price': price};
-        localStorage.setItem('shopcar', JSON.stringify(sc));
-    }
-    getShopCar(){
-        let shopcar = JSON.parse(localStorage.getItem('shopcar'));
-        this.shopcar = shopcar;
-        console.log(shopcar);
-        console.log(this.shopcar);
-        return this.shopcar;
-    }*/
 
     public addItem(product: Modelo, quantity: number, price: number): void {        
         const cart = this.retrieve();

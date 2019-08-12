@@ -2,12 +2,10 @@
 <p class="p">Aquí estan los modelos registrados</p>
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#newModel">
+<button *ngIf="role && role=='ROLE_ADMIN'" type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#newModel">
     <i class="fa fa-plus mr-1" aria-hidden="true"></i> Crear nuevo modelo
 </button>
-<button type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#newModel">
-    <i class="fa fa-plus mr-1" aria-hidden="true"></i> Crear nuevo modelo
-</button>
+
 
 <!-- Modal -->
 <div class="modal fade" id="newModel" tabindex="-1" role="dialog" aria-labelledby="newModelLabel" aria-hidden="true">
@@ -75,7 +73,7 @@
       <th>Marca</th>
       <th>Talla</th>
       <th>Stock</th>
-      <th>Acciones</th>
+      <th *ngIf="role && role=='ROLE_ADMIN'">Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -85,7 +83,7 @@
       <td>{{model.marca.name}}</td>
       <td>{{model.talla.name}}</td>
       <td>{{model.stock}}</td>
-      <td>
+      <td *ngIf="role && role=='ROLE_ADMIN'">
         <button class="btn btn-warning mr-2" (click)="preUpdate(model)" data-toggle="modal" data-target="#newModel">Editar</button>
         <button class="btn btn-danger" (click)="deleteModel(model)">Eliminar</button>
       </td>

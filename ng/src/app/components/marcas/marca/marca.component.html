@@ -4,7 +4,7 @@
 
 
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#newMarca">
+<button *ngIf="role && role=='ROLE_ADMIN'" type="button" class="btn btn-success mb-3" (click)="add()" data-toggle="modal" data-target="#newMarca">
   <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nueva Marca
 </button>
 
@@ -55,7 +55,7 @@
       <th scope="col">#</th>
       <th scope="col">Marca</th>
       <th scope="col">Tipo de prenda</th>
-      <th scope="col">Acciones</th>
+      <th scope="col" *ngIf="role && role=='ROLE_ADMIN'">Acciones</th>
     </tr>
   </thead>
   <tbody>
@@ -63,7 +63,7 @@
       <td scope="row">{{i+1}}</td>
       <td scope="row">{{marc.name}}</td>
       <td>{{marc.tipo.name}}</td>
-      <td>
+      <td *ngIf="role && role=='ROLE_ADMIN'">
         <button class="btn btn-warning mr-2" data-toggle="modal" data-target="#newMarca" (click)="preUpdateMarca(marc)">Editar</button>
         <button class="btn btn-danger" (click)="delete(marc)" >Eliminar</button>
       </td>

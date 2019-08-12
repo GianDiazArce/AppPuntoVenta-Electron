@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { MarcaService } from 'src/app/services/marca.service';
 import { Marca } from 'src/app/models/marca';
 import { TipoService } from 'src/app/services/tipo.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-marca',
   templateUrl: './marca.component.html',
   styleUrls: ['./marca.component.css'],
-  providers: [MarcaService, TipoService]
+  providers: [MarcaService, TipoService, UserService]
 })
 export class MarcaComponent implements OnInit {
 
@@ -16,14 +17,20 @@ export class MarcaComponent implements OnInit {
   private update;
   public tipos;
 
+  public token;
+  public role;
+
   pageActual: number = 1;
 
   constructor(
     private _marcaService: MarcaService,
-    private _tipoService: TipoService
+    private _tipoService: TipoService,
+    private _userService: UserService
   ) {
     this.marca = new Marca(1,0,'');
     this.update = null;
+    this.token = this._userService.getToken();
+    this.role = this._userService.getRol();
    }
 
   ngOnInit() {
@@ -62,7 +69,7 @@ export class MarcaComponent implements OnInit {
     )
   }
   onSubmit(form){
-    this._marcaService.save(this.marca).subscribe(
+    this._marcaService.save(this.marca, this.token).subscribe(
       response => {
         if(response.status == 'success'){
           this.closeModal();
@@ -94,7 +101,7 @@ export class MarcaComponent implements OnInit {
   }
   delete(marc){
     if(confirm('¿Esta seguro que quiere eliminar esta marca?')){
-      this._marcaService.delete(marc.id).subscribe(
+      this._marcaService.delete(marc.id, this.token).subscribe(
         response => {
           if(response.status == 'success'){
             this.getMarcas();
@@ -109,7 +116,7 @@ export class MarcaComponent implements OnInit {
     }
   }
   updateMarca(id){
-    this._marcaService.update(id, this.marca).subscribe(
+    this._marcaService.update(id, this.marca, this.token).subscribe(
       response => {
         if(response.status == 'success'){
           this.getMarcas();

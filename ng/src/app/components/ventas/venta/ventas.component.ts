@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { VentaService } from 'src/app/services/venta.service';
+import { SaleService } from 'src/app/services/sale.service';
 
 @Component({
   selector: 'app-ventas',
   templateUrl: './ventas.component.html',
   styleUrls: ['./ventas.component.css'],
-  providers: [VentaService]
+  providers: [SaleService]
 })
 export class VentasComponent implements OnInit {
 
   public ventas;
 
   constructor(
-    private _ventaService: VentaService
+    private _ventaService: SaleService
   ) { }
 
   ngOnInit() {

@@ -3,6 +3,7 @@ export class Venta {
         public id:number,
         public user_id: number,
         public total: number,
-        public discount: number
+        public discount: number,
+        public status: string
     ){}
 }

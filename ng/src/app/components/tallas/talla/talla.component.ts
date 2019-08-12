@@ -2,12 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { TallaService } from 'src/app/services/talla.service';
 import { Talla } from 'src/app/models/talla';
 import { NgForm } from '@angular/forms';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-talla',
   templateUrl: './talla.component.html',
   styleUrls: ['./talla.component.css'],
-  providers: [TallaService]
+  providers: [TallaService, UserService]
 })
 export class TallaComponent implements OnInit {
 
@@ -17,14 +18,18 @@ export class TallaComponent implements OnInit {
   public status;
   private accion;
   
-  
+  public token;
+  public role;
 
   pageActual: number = 1;
   constructor(
-    private _tallaService: TallaService
+    private _tallaService: TallaService,
+    private _userService: UserService
   ) { 
     this.talla = new Talla(1,'');
     this.update = null;
+    this.token = this._userService.getToken();
+    this.role = this._userService.getRol();
   }
 
   ngOnInit() {
@@ -49,8 +54,8 @@ export class TallaComponent implements OnInit {
       }
     );
   }
-  onSubmit(form){   
-    this._tallaService.save(this.talla).subscribe(
+  onSubmit(form){
+    this._tallaService.save(this.talla, this.token).subscribe(
       response => {
         if(response.status == 'success'){
           this.getTallas();
@@ -85,7 +90,7 @@ export class TallaComponent implements OnInit {
   }
   updateTalla(id){
     this.accion = 'actualizada'
-    this._tallaService.update(id, this.talla).subscribe(
+    this._tallaService.update(id, this.talla, this.token).subscribe(
       response => {
         if(response.status == 'success'){
           this.getTallas();
@@ -105,7 +110,7 @@ export class TallaComponent implements OnInit {
   deleteTalla(tall){
     if(confirm('Seguro de eliminar')){
       
-      this._tallaService.delete(tall.id).subscribe(
+      this._tallaService.delete(tall.id, this.token).subscribe(
         response => {
           if(response.status == 'success'){
             this.accion = 'eliminada';

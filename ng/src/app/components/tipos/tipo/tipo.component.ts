@@ -40,7 +40,6 @@ export class TipoComponent implements OnInit {
     this.btnForm = 'Crear';
     this.tipo.name = '';
   }
-
   getTipos(){
     this._tipoService.getTipos().subscribe(
       response => {
@@ -55,9 +54,8 @@ export class TipoComponent implements OnInit {
       }
     )
   }
-
   onSubmit(form){
-    this._tipoService.save(this.tipo).subscribe(
+    this._tipoService.save(this.tipo, this.token).subscribe(
       response => {
         if(response.status == 'success'){          
           this.getTipos();
@@ -92,7 +90,6 @@ export class TipoComponent implements OnInit {
   closeModal(){
     document.getElementById('btnClose').click();
   }
-
   updateTipo(tipo){
     this._tipoService.update(tipo.id, this.tipo, this.token).subscribe(
       response => {

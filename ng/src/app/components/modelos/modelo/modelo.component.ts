@@ -4,12 +4,13 @@ import { Modelo } from 'src/app/models/modelo';
 import { MarcaService } from 'src/app/services/marca.service';
 import { TallaService } from 'src/app/services/talla.service';
 import { TipoService } from 'src/app/services/tipo.service';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-modelo',
   templateUrl: './modelo.component.html',
   styleUrls: ['./modelo.component.css'],
-  providers: [ModeloService, MarcaService, TallaService, TipoService]
+  providers: [ModeloService, MarcaService, TallaService, TipoService, UserService]
 })
 export class ModeloComponent implements OnInit {
 
@@ -24,12 +25,18 @@ export class ModeloComponent implements OnInit {
   private btnForm : string;
   private modal_title : string;
 
+  public token;
+  public role;
+
   constructor(
     private _modeloService: ModeloService,
     private _marcaService: MarcaService, 
-    private _tallaService: TallaService
+    private _tallaService: TallaService,
+    private _userService: UserService
   ) { 
     this.modelo = new Modelo(1, 0, 0, '', 0);
+    this.token = this._userService.getToken();
+    this.role = this._userService.getRol();
   }
 
   ngOnInit() {
@@ -81,7 +88,7 @@ export class ModeloComponent implements OnInit {
     )
   }
   onSubmit(form){
-    this._modeloService.save(this.modelo).subscribe(
+    this._modeloService.save(this.modelo, this.token).subscribe(
       response => {
         if(response.status == 'success'){
           this.getModelos();
@@ -112,7 +119,7 @@ export class ModeloComponent implements OnInit {
     )
   }
   updateModel(id){
-    this._modeloService.update(id, this.modelo).subscribe(
+    this._modeloService.update(id, this.modelo, this.token).subscribe(
       response => {
         if(response.status == 'success'){
           this.getModelos();
@@ -128,7 +135,7 @@ export class ModeloComponent implements OnInit {
   }
   deleteModel(model){
     if(confirm('Desea eliminar el modelo - '+ model.name)){
-      this._modeloService.delete(model.id).subscribe(
+      this._modeloService.delete(model.id, this.token).subscribe(
         response => {
           if(response.status == 'success'){
             this.getModelos();

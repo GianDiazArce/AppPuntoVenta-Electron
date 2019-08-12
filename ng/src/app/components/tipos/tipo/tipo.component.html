@@ -1,7 +1,7 @@
 <p class="h2">Tipos</p>
 <p class="p">Aqui estaran los tipos de prendas. Por ejemplo (casaca, chompa manga larga, etc).</p>
 <!-- Button trigger modal -->
-<button type="button" class="btn btn-success" (click)=add() data-toggle="modal" data-target="#tipoModal">
+<button *ngIf="role && role=='ROLE_ADMIN'" type="button" class="btn btn-success" (click)=add() data-toggle="modal" data-target="#tipoModal">
   <i class="fa fa-plus mr-1" aria-hidden="true"></i> Agregar nuevo tipo
 </button>
 

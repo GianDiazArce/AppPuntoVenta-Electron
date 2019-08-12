@@ -3,12 +3,17 @@ import { ModeloService } from 'src/app/services/modelo.service';
 import { TipoService } from 'src/app/services/tipo.service';
 import { MarcaService } from 'src/app/services/marca.service';
 import { VentaService } from 'src/app/services/venta.service';
+import { Venta } from 'src/app/models/venta';
+import { UserService } from 'src/app/services/user.service';
+import { DetalleVentaService } from 'src/app/services/detalle-venta';
+import { detalleVenta } from 'src/app/models/detalle_venta';
+import { SaleService } from 'src/app/services/sale.service';
 
 @Component({
   selector: 'app-generar-venta',
   templateUrl: './generar-venta.component.html',
   styleUrls: ['./generar-venta.component.css'],
-  providers: [ModeloService, TipoService,MarcaService, VentaService]
+  providers: [ModeloService, TipoService,MarcaService, VentaService, UserService, DetalleVentaService, SaleService]
 })
 export class GenerarVentaComponent implements OnInit {
 
@@ -18,20 +23,35 @@ export class GenerarVentaComponent implements OnInit {
   public marcas: any;
   public modelo;
 
+  public identity;
+  public token;
+
   public quantity;
   public price;
 
   public items;
   public total;
+
+  public sale: Venta;
+  private status;
+
+  public detalleVenta: detalleVenta
   
   constructor(
     private _modeloService: ModeloService,
     private _tipoService: TipoService,
     private _marcaService: MarcaService,
-    private _ventaService: VentaService
+    private _ventaService: VentaService,
+    private _userService: UserService,
+    private _detalleVentaService: DetalleVentaService,
+    private _saleService : SaleService
   ) { 
     this.quantity = 0;
     this.price = 0;
+    this.sale = new Venta(0,0,0,0,'');
+    this.identity = this._userService.getIdentity();
+    this.token = this._userService.getToken();
+    this.detalleVenta = new detalleVenta(1,0,0,0,0);
   }
 // Nota:
 // Al hacer la venta obtener el id de la response.venta.id creada y almacenar el detalle venta con ese id
@@ -120,6 +140,52 @@ export class GenerarVentaComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  venta(){
+    this._ventaService.get().subscribe(
+      response => {
+        let precioTotal = response.itemsTotal;
+        this.sale.total = precioTotal;
+        this.sale.user_id = this.identity.sub;
+        this.sale.discount = 0;
+        this.sale.status = 'ACTIVO';
+        this._saleService.saveVenta(this.sale, this.token).subscribe(
+          response => {
+            if(response.status=='success'){
+              let venta = response.venta;
+              console.log(venta.id);
+              for (let i = 0; i < this.items.length; i++) {
+                const element = this.items[i];          
+                this.detalleVenta.modelo_id = element.modelo.id;
+                this.detalleVenta.price = element.price;
+                this.detalleVenta.quantity = element.quantity;
+                this.detalleVenta.venta_id = venta.id;
+                this._detalleVentaService.save(this.detalleVenta, this.token).subscribe(
+                  res => {
+                    if(res.status == 'success'){
+                      this.status = 'success';                      
+                    } else {
+                      this.status = 'error';
+                    }
+                  },
+                  error => {
+                    console.log(error);
+                    this.status = 'error';
+                  }
+                );
+              }
+              
+            } 
+          },
+          error => {
+            console.log(error);
+          }
+        )
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
   
 

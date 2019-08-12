@@ -20,11 +20,11 @@ export class MarcaService {
         return this._http.get(this.url + 'marca', {headers});
     }
 
-    save(marca):Observable<any>{
+    save(marca, token):Observable<any>{
 
         let params = "json="+ JSON.stringify(marca);
 
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.post(this.url + 'marca', params, {headers});
     }
@@ -35,16 +35,16 @@ export class MarcaService {
         return this._http.get(this.url + 'marca/' + id, {headers});
     }
 
-    update(id, marca): Observable<any>{
+    update(id, marca, token): Observable<any>{
         let params = "json="+ JSON.stringify(marca);
 
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.put(this.url + 'marca/' + id, params, {headers});
     }
 
-    delete(id): Observable<any>{
-        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+    delete(id, token): Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
 
         return this._http.delete(this.url + 'marca/' + id, {headers});
     }
