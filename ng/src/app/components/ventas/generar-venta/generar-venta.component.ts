@@ -5,7 +5,7 @@ import { MarcaService } from 'src/app/services/marca.service';
 import { VentaService } from 'src/app/services/venta.service';
 import { Venta } from 'src/app/models/venta';
 import { UserService } from 'src/app/services/user.service';
-import { DetalleVentaService } from 'src/app/services/detalle-venta';
+import { DetalleVentaService } from 'src/app/services/detalle-venta.service';
 import { detalleVenta } from 'src/app/models/detalle_venta';
 import { SaleService } from 'src/app/services/sale.service';
 

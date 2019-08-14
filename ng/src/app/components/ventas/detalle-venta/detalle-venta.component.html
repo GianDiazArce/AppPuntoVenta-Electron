@@ -1,5 +1,12 @@
-<table class="table">
+<p class="h3">Venta N°{{venta.id}}</p> 
+<p class="p" >La fecha : {{ fecha | date:'d'}}/{{ fecha | date:'MM'}}/{{ fecha | date:'y'}}  venta realizada por: {{name}}</p>
+<table class="table table-bordered text-center">
   <thead>
+    <tr>
+      <th> Venta Nº{{venta.id}}</th>
+      <th colspan="2" ></th>
+      <th>{{ fecha | date:'d'}}/{{ fecha | date:'MM'}}/{{ fecha | date:'y'}}</th>
+    </tr>
     <tr>
       <th>#</th>
       <th>Modelo</th>
@@ -12,9 +19,14 @@
       <td scope="row">{{i+1}}</td>
       <td>{{dvs.modelo.name}}</td>
       <td>{{dvs.quantity}}</td>
-      <td>{{dvs.price}}</td>
+      <td>S/{{dvs.price}}</td>
+    </tr>
+    <tr>
+      <td colspan="3" ></td>
+      <td class="total">Total: S/{{venta.total}}</td>
     </tr>
   </tbody>
 </table>
 
-<button class="btn btn-dark" [routerLink]="['/ventas']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Volver </button>
+
+<button class="btn btn-dark mt-5" [routerLink]="['/ventas']"><i class="fa fa-arrow-left mr-1" aria-hidden="true"></i> Volver </button>

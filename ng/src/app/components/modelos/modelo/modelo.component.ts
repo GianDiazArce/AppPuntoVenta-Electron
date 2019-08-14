@@ -18,24 +18,29 @@ export class ModeloComponent implements OnInit {
   public modelo: Modelo;
 
   
-  public marcas;
-  public tallas;
+  public marcas: any;
+  public tallas: any;
+  public tipos: any;
+  public tipo_id: number;
 
   private update;
   private btnForm : string;
   private modal_title : string;
+  public newName: boolean;
 
-  public token;
-  public role;
-
+  public token: string;
+  public role: string;
+  
   constructor(
     private _modeloService: ModeloService,
     private _marcaService: MarcaService, 
     private _tallaService: TallaService,
-    private _userService: UserService
+    private _userService: UserService,
+    private _tipoService: TipoService
   ) { 
     this.modelo = new Modelo(1, 0, 0, '', 0);
     this.token = this._userService.getToken();
+    this.newName = true;
     this.role = this._userService.getRol();
   }
 
@@ -43,8 +48,17 @@ export class ModeloComponent implements OnInit {
     this.getModelos();
     this.cargarComboBoxes();
   }
+  rbName(event){
+    let value = event.target.value;
+    if(value === 'usingName'){
+      this.newName = false;
+    } else {
+      this.newName = true;
+    }
+  }
 
   cargarComboBoxes(){
+    /*
     this._marcaService.getMarcas().subscribe(
       res => {
         if(res.status == 'success'){
@@ -54,7 +68,7 @@ export class ModeloComponent implements OnInit {
       err => {
         console.log(err);
       }
-    );    
+    );   */ 
     this._tallaService.getTallas().subscribe(
       res => {
         this.tallas = res.tallas;
@@ -63,6 +77,14 @@ export class ModeloComponent implements OnInit {
         console.log(err);
       }
     );
+    this._tipoService.getTipos().subscribe(
+      res => {
+        this.tipos = res.tipos;
+      },
+      error => {
+        console.log(error);
+      }
+    )
     
   }
   add(){
@@ -87,7 +109,7 @@ export class ModeloComponent implements OnInit {
       }
     )
   }
-  onSubmit(form){
+  onSubmit(form){    
     this._modeloService.save(this.modelo, this.token).subscribe(
       response => {
         if(response.status == 'success'){
@@ -109,11 +131,13 @@ export class ModeloComponent implements OnInit {
   preUpdate(model){
     this.update = true;
     this.btnForm = 'Actualizar';
+    this.tipo_id = model.marca.tipo_id;
+    this.getMarcasByTipo(this.tipo_id);
     this.modal_title = 'Editar el modelo: ' + model.name
     this._modeloService.getModelo(model.id).subscribe(
       response => {
         if(response.status == 'success'){
-          this.modelo = response.modelo; 
+          this.modelo = response.modelo;
         }
       }
     )
@@ -146,6 +170,24 @@ export class ModeloComponent implements OnInit {
         }
       )
     }
+  }
+
+  cboTipoChange(event){    
+    let newVal =  event.target.value;
+    this.getMarcasByTipo(newVal);
+    
+  }
+  getMarcasByTipo(tipo_id){
+    this._marcaService.getMarcaByTipo(tipo_id).subscribe(
+      response => {
+        if(response.status == 'success'){
+          this.marcas = response.marcas;
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    )
   }
 
 }

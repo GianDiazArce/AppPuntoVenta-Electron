@@ -27,6 +27,7 @@ import { LoginComponent } from './components/user/login/login.component';
 
 import { LocalStorageServie, StorageService } from "./services/storage.service";
 import { VentaService } from './services/venta.service';
+import { UniquePipe } from './pipes/unique.pipe';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { VentaService } from './services/venta.service';
     GenerarVentaComponent,
     VentasComponent,
     DetalleVentaComponent,
-    LoginComponent
+    LoginComponent,
+    UniquePipe
   ],
   imports: [
     BrowserModule,

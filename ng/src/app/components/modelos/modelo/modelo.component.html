@@ -18,47 +18,77 @@
         </button>
       </div>
       <div class="modal-body">
-        <form #newModelo="ngForm" class="row" (ngSubmit)="onSubmit(newModelo)">
-          <div class="form-group col-md-6 col-sm-12">
-            <label for="name">Nombre</label>
-            <input type="text" name="name" #name="ngModel" [(ngModel)]="modelo.name" class="form-control" aria-describedby="helpId" required>
-            <small id="helpId" class="text-muted">Help text</small>
-          </div>       
-             
+        <form #newModelo="ngForm"  (ngSubmit)="onSubmit(newModelo)">
+          <div class="row">
+            <div class="form-check form-check-inline offset-3 col-md-12">
+              <label class="form-check-label ml-3">
+                <input class="form-check-input" type="radio" name="newName" id="newName" value="newName" (change)="rbName($event)" checked> Nuevo nombre
+              </label>
+              <label class="form-check-label ml-2">
+                  <input class="form-check-input" type="radio" name="newName" id="sameName" value="usingName" (change)="rbName($event)"> Usar nombre existente
+                </label>
+            </div>
+          </div>
+          <hr class="w-50">
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <div *ngIf="newName">
+                <label for="name">Nombre:</label>
+                <input type="text" name="name" #name="ngModel" [(ngModel)]="modelo.name" class="form-control" required>
+              </div>
+              <div *ngIf="!newName">
+                <label for="name">Nombre:</label>
+                <select class="form-control" name="name" #name="ngModel" [(ngModel)]="modelo.name" required>
+                  <option value="{{model.name}}" *ngFor="let model of modelos | unique">{{model.name}}</option>
+                </select>
+              </div>
+              
+            </div> 
+  
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="tipo">Tipo</label>
+              <select class="form-control" name="tipo" (change)="cboTipoChange($event)" [(ngModel)]="tipo_id" required>
+                <option value="0">Seleccione una opcion</option>
+                <option value="{{tipo.id}}" *ngFor="let tipo of tipos">{{tipo.name}}</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="marca_id">Marca</label>
+              <select class="form-control" name="marca_id" #marca_id="ngModel" [(ngModel)]="modelo.marca_id" required>
+                <option value="0">Seleccione una opcion</option>
+                <option value="{{marca.id}}" *ngFor="let marca of marcas">{{marca.name}}</option>
+              </select>
+            </div>
+  
+            <div class="form-group col-md-6 col-sm-12">
+              <label for="talla_id">Talla</label>
+              <select class="form-control" name="talla_id" #talla_id="ngModel" [(ngModel)]="modelo.talla_id" required>
+                <option value="0">Seleccione una opcion</option>
+                <option value="{{talla.id}}" *ngFor="let talla of tallas">{{talla.name}}</option>
+              </select>
+            </div>
+
+            <div class="form-group col-md-6 col-sm-12 offset-md-3">
+              <label for="stock">Stock</label>
+              <input type="number" name="stock" #stock="ngModel" [(ngModel)]="modelo.stock" class="form-control" placeholder="stock" aria-describedby="helpStock" required>
+              <small id="helpStock" class="text-muted">Aqui ingrese cuantas unidades de este modelo ingresarán a su inventario ej: (2, 4, 10, 25, etc).</small>
+            </div>
+            
+            <div class="col-12">
+              <button type="submit" class="btn btn-success" *ngIf="!update"
+               [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0  || modelo.stock == 0 ">
+               {{btnForm}}
+              </button>
+              <button type="button" class="btn btn-success" *ngIf="update" (click)="updateModel(modelo.id)"
+               [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0 || modelo.stock == 0 ">
+               {{btnForm}}
+              </button>
+            </div>
+          </div>
           
-
-          <div class="form-group col-md-6 col-sm-12">
-            <label for="marca_id">Marca</label>
-            <select class="form-control" name="marca_id" #marca_id="ngModel" [(ngModel)]="modelo.marca_id" required>
-              <option value="0">Seleccione una opcion</option>
-              <option value="{{marca.id}}" *ngFor="let marca of marcas">{{marca.name}} - {{marca.tipo.name}}</option>
-            </select>
-          </div>
-
-          <div class="form-group col-md-6 col-sm-12">
-            <label for="talla_id">Talla</label>
-            <select class="form-control" name="talla_id" #talla_id="ngModel" [(ngModel)]="modelo.talla_id" required>
-              <option value="0">Seleccione una opcion</option>
-              <option value="{{talla.id}}" *ngFor="let talla of tallas">{{talla.name}}</option>
-            </select>
-          </div>
-
-          <div class="form-group col-md-6 col-sm-12 ">
-            <label for="stock">Stock</label>
-            <input type="number" name="stock" #stock="ngModel" [(ngModel)]="modelo.stock" class="form-control" placeholder="stock" aria-describedby="helpStock" required>
-            <small id="helpStock" class="text-muted">Aqui ingrese cuantas unidades de este modelo ingresarán a su inventario ej: (2, 4, 10, 25, etc).</small>
-          </div>
-          
-          <div class="col-12">
-            <button type="submit" class="btn btn-success" *ngIf="!update"
-             [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0  || modelo.stock == 0 ">
-             {{btnForm}}
-            </button>
-            <button type="button" class="btn btn-success" *ngIf="update" (click)="updateModel(modelo.id)"
-             [disabled]="!newModelo.valid || modelo.talla_id == 0 || modelo.marca_id == 0 || modelo.stock == 0 ">
-             {{btnForm}}
-            </button>
-          </div>
         </form>
       </div>      
     </div>

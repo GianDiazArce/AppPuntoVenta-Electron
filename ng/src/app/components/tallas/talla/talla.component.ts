@@ -39,6 +39,7 @@ export class TallaComponent implements OnInit {
   
   add(){
     this.update = null;
+    this.talla = new Talla(1,'');
   }
   getTallas(){
     this._tallaService.getTallas().subscribe(
