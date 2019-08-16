@@ -1,6 +1,7 @@
 <p class="h3">Venta N°{{venta.id}}</p> 
-<p class="p" >La fecha : {{ fecha | date:'d'}}/{{ fecha | date:'MM'}}/{{ fecha | date:'y'}}  venta realizada por: {{name}}</p>
-<table class="table table-bordered text-center">
+<p class="p" >La venta fue realizada en la fecha: {{ fecha | date:'d'}}/{{ fecha | date:'MM'}}/{{ fecha | date:'y'}}</p> 
+<button class="btn btn-success mb-3" (click)="fireEvent()" >Exportar a excel</button>
+<table class="table table-bordered text-center" #table>
   <thead>
     <tr>
       <th> Venta Nº{{venta.id}}</th>
