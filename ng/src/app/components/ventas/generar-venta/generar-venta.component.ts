@@ -35,6 +35,8 @@ export class GenerarVentaComponent implements OnInit {
   public sale: Venta;
   private status;
 
+  public stock:number;
+
   public detalleVenta: detalleVenta
   
   constructor(
@@ -68,7 +70,7 @@ export class GenerarVentaComponent implements OnInit {
         response => {
           if(response.status == 'success'){
             this.modelo = response.modelo;
-            console.log(this.modelo);
+            this.stock = response.modelo.stock;
           } else {
             console.log(response.message);
           }
@@ -116,6 +118,7 @@ export class GenerarVentaComponent implements OnInit {
       response => {
         if(response.status == 'success'){
           this.modelos = response.modelos;
+          
         }
       },
       error => {
@@ -153,7 +156,7 @@ export class GenerarVentaComponent implements OnInit {
           response => {
             if(response.status=='success'){
               let venta = response.venta;
-              console.log(venta.id);
+              //console.log(venta.id);
               for (let i = 0; i < this.items.length; i++) {
                 const element = this.items[i];          
                 this.detalleVenta.modelo_id = element.modelo.id;
@@ -173,6 +176,8 @@ export class GenerarVentaComponent implements OnInit {
                     this.status = 'error';
                   }
                 );
+                this._modeloService.updateStock(element.modelo.id, element.quantity, this.token).subscribe(res => console.log(res), err => console.log(err));
+                
               }
               
             } 
@@ -186,6 +191,20 @@ export class GenerarVentaComponent implements OnInit {
         console.log(error);
       }
     )
+  }
+
+  // Acciones carrito
+  eliminarModelo(item, i){
+    this._ventaService.removeItem(item.modelo.id, i);
+    this.getTableModelos();
+  }
+  addQuantity(item, i){
+    this._ventaService.addQuantity(item.modelo.id, i);
+    this.getTableModelos();
+  }
+  minusCuantity(item, i){
+    this._ventaService.minusQuantity(item.modelo.id, i);
+    this.getTableModelos();
   }
   
 

@@ -1,4 +1,29 @@
-<p class="h2">Ventas</p>
+<p class="h2">Ventas del mes "{{month}}"</p>
+<p class="p">Total de todas las ventas: S/{{total}}</p>
+
+<form>
+  <div class="row">
+    <div class="form-group col-md-2">
+      <label for="mes">Mes:</label>
+      <select class="form-control" name="mes" (change)="cambiaMes($event)" [value]="mes"  >
+        <option value="{{i+1}}" *ngFor="let fec of fecha; let i = index">{{fec}}</option>
+      </select>
+    </div>
+    <div class="form-group col-md-2">
+      <label for="day">Dia :</label>
+      <input type="number" name="day" [(ngModel)]="day">
+    </div>
+    <div class="col-md-2">
+      <div class="mb-4"></div>
+      <button class="mt-1 btn btn-success" [disabled]="day <= 0" (click)="ventaByDay(day)">Buscar por dia</button>
+    </div>
+    <!-- <div class="form-group col-md-2">
+      <label for="month">Año:</label>
+      <input type="number">
+    </div> -->
+  </div>
+</form>
+
 <table class="table mt-3 text-center">
   <thead>
     <tr>
@@ -20,7 +45,7 @@
       <td>
         <button class="btn btn-info mr-2" [routerLink]="['/detalle-venta', vent.id]" >Ver detalles</button>
         <button class="btn btn-warning mr-2">Editar</button>
-        <button class="btn btn-danger">Eliminar</button>
+        <button class="btn btn-danger" (click)="delete(vent)">Eliminar</button>
       </td>
     </tr>    
   </tbody>

@@ -23,6 +23,7 @@ function createWindow(){
         height: alto
     });
     mainWindow.loadFile('ng/dist/index.html');
+    mainWindow.setMenuBarVisibility(false);
 
     mainWindow.webContents.openDevTools();
     // Cuando la ventana es cerrada

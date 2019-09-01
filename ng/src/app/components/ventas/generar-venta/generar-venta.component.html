@@ -11,22 +11,22 @@
   <div class="row">
     <div class="form-group col-md-3">
       <label for="tipo">Tipo</label>
-      <select class="form-control" name="tipo" (change)="cboTipoChange($event)">
-        <option>Seleccione que tipo de ropa</option>
+      <select class="form-control" name="tipo" (change)="cboTipoChange($event)"required>
+        <option value="undefined">Seleccione que tipo de ropa</option>
         <option *ngFor="let tipo of tipos" value="{{tipo.id}}">{{tipo.name}}</option>
       </select>
     </div>
     <div class="form-group col-md-3">
       <label for="marca">Marca</label>
-      <select class="form-control" name="marca"(change)="cboMarcaChange($event)">
-        <option>Seleccione una marca</option>
+      <select class="form-control" name="marca"(change)="cboMarcaChange($event)" required>
+        <option value="undefined">Seleccione una marca</option>
         <option  *ngFor="let marca of marcas" value="{{marca.id}}" >{{marca.name}}</option>
       </select>
     </div>
 
     <div class="form-group col-md-6 ">
       <label for="model">Modelo</label>
-      <select class="form-control" name="model" (change)="cboModeloChange($event)">
+      <select class="form-control" name="model" (change)="cboModeloChange($event)" required>
         <option value="0">Seleccione un modelo</option>
         <option value="{{modelo.id}}"  *ngFor="let modelo of modelos">{{modelo.name}} - {{modelo.talla.name}} - ({{modelo.stock}})</option>
       </select>
@@ -36,22 +36,23 @@
   <div class="row">
       <div class="form-group col-md-3">
           <label for="quantity">Cantidad</label>
-          <input type="number" name="quantity"  [(ngModel)]="quantity"  class="form-control" >
+          <input type="number" name="quantity"  [(ngModel)]="quantity"  class="form-control" required>
+          <small class="text-muted" *ngIf="modelo">{{modelo.name}} | {{modelo.talla.name}} | stock: {{modelo.stock}} </small>
         </div>
     
         <div class="form-group col-md-3">
           <label for="price">Precio (unidad)</label>
-          <input type="number" name="price"  [(ngModel)]="price"  class="form-control" >
+          <input type="number" name="price"  [(ngModel)]="price"  class="form-control" required>
         </div>
         <div class="col d-flex align-items-center pb-sm-3 pb-3 pb-lg-0 pt-2">
-          <button type="submit" class="btn btn-info" >Agregar</button>
-          <button class="btn btn-dark ml-2" type="button" (click)="limpiarTabla()" id="limpiaTabla"> <i class="fa fa-times" aria-hidden="true"></i> Limpiar</button>
+          <button type="submit" class="btn btn-info" [disabled]="!generarVenta.valid || quantity <= 0 || quantity > stock " >Agregar</button>
+          <button class="btn btn-dark ml-2" type="reset" (click)="limpiarTabla()" id="limpiaTabla"> <i class="fa fa-times" aria-hidden="true"></i> Limpiar</button>
         </div>
   </div>
   
 </form>
-
-<table class="table">
+<span class="text-muted">El (+) sirve para agregar una cantidad el (-) para disminuir y el (x) para quitar el producto</span>
+<table class="table mt-3">
   <thead>
     <tr>
       <th>#</th>
@@ -69,7 +70,11 @@
       <td>{{item.modelo.talla.name}}</td>
       <td>{{item.quantity}}</td>
       <td>S/{{item.price}}</td>
-      <td></td>
+      <td>
+        <button class="btn btn-danger btn-sm mr-2" (click)="eliminarModelo(item, i)"><i class="fa fa-times" aria-hidden="true"></i></button>
+        <button class="btn btn-secondary btn-sm mr-1" (click)="minusCuantity(item, i)" ><i class="fa fa-minus" aria-hidden="true"></i></button>
+        <button class="btn btn-secondary btn-sm" (click)="addQuantity(item, i)"><i class="fa fa-plus" aria-hidden="true"></i></button>
+      </td>
     </tr>    
   </tbody>
 </table>

@@ -17,11 +17,15 @@ export class ModeloComponent implements OnInit {
   public modelos;
   public modelo: Modelo;
 
+  public models;
+
   
   public marcas: any;
   public tallas: any;
   public tipos: any;
   public tipo_id: number;
+
+  public cboMarcas;
 
   private update;
   private btnForm : string;
@@ -45,7 +49,7 @@ export class ModeloComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getModelos();
+    //this.getModelos();
     this.cargarComboBoxes();
   }
   rbName(event){
@@ -56,19 +60,23 @@ export class ModeloComponent implements OnInit {
       this.newName = true;
     }
   }
+  cboTipo(event){
+    let tipo_id = event.target.value;
+    if(tipo_id == undefined || tipo_id == 'undefined'){
+      console.log('error');
+    } else {
+      this._marcaService.getMarcaByTipo(tipo_id).subscribe(res => this.cboMarcas = res.marcas , err => console.log(err));
+    }
+    
+  }
+  cboMarcaChange(event){
+    let newVal = event.target.value;
+    this._modeloService.getModeloByMarca(newVal).subscribe(res => this.modelos = res.modelos , err => console.log(err))
+    
+  }
 
   cargarComboBoxes(){
-    /*
-    this._marcaService.getMarcas().subscribe(
-      res => {
-        if(res.status == 'success'){
-          this.marcas = res.marcas
-        }
-      },
-      err => {
-        console.log(err);
-      }
-    );   */ 
+     
     this._tallaService.getTallas().subscribe(
       res => {
         this.tallas = res.tallas;
@@ -83,6 +91,20 @@ export class ModeloComponent implements OnInit {
       },
       error => {
         console.log(error);
+      }
+    );
+    this._modeloService.getModelos().subscribe(
+      
+      res => {
+        var names = res.modelos.map(function (person) { return person.name; });
+        var sorted = names.sort();
+        var unique = sorted.filter(function (value, index) {
+          return value !== sorted[index + 1];
+      });
+      this.models = unique;
+      },
+      err => {
+        console.log(err);
       }
     )
     
@@ -100,6 +122,8 @@ export class ModeloComponent implements OnInit {
       response => {
         if(response.status == 'success'){
           this.modelos = response.modelos;
+          console.log(this.modelos);
+          
         } else {
           console.log(response.error);
         }

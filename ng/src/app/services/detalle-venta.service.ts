@@ -16,9 +16,15 @@ export class DetalleVentaService {
     save(detalleVenta, token):Observable<any>{
         let params = "json=" + JSON.stringify(detalleVenta);
         let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
-                                     .set('Authorization',token);
+                                       .set('Authorization',token);
 
         return this._http.post(this.url + 'detalle-venta', params, {headers});
+    }
+
+    delete(id, token): Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded')
+                                       .set('Authorization',token);
+        return this._http.delete(this.url + 'detalle-venta/' + id, {headers});
     }
     
 }

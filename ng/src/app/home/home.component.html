@@ -1,11 +1,25 @@
-<div class="jumbotron">
-  <h1 class="display-3">Bienvenido al sistema v'divas</h1>
-  <p class="lead">Hola es un texto de prueba</p>
-  <hr class="my-2">
-  <p>Parrafo de prueba</p>
-  <p class="lead">
-    <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Test</a>    
-  </p>
+<div *ngIf="!identity">
+  <div class="jumbotron">
+    <h1 class="display-3">Bienvenido al sistema v'divas</h1>
+    <p class="lead">Su usuario no esta identificado...</p>
+    <hr class="my-2">
+    <p>Pulse en el boton para identificarse</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" [routerLink]="['/login']" role="button">Identificarse</a>    
+    </p>
+  </div>
+</div>
+
+<div *ngIf="identity">
+  <div class="jumbotron text-center">
+    <h1 class="display-3">Sistema v'divas</h1>
+    <p class="lead">Bienvenido {{identity.name | titlecase }}</p>
+    <hr class="my-2">
+    <!-- <p>Parrafo de prueba</p>
+    <p class="lead">
+      <a class="btn btn-primary btn-lg" href="Jumbo action link" role="button">Test</a>    
+    </p> -->
+  </div>
 </div>
 
 

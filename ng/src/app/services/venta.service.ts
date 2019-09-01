@@ -50,6 +50,40 @@ export class VentaService {
     public get(): Observable<ShoppingCart> {
         return this.subscriptionObservable;
     }
+    public removeItem(id,index): void{
+      const cart = this.retrieve();
+      let item = cart.items.find((p) => p.productId === id); 
+      cart.items.splice(index, 1);
+      this.calculateCart(cart);
+      this.save(cart);
+      this.dispatch(cart);
+    }
+
+    public addQuantity(id, index): void {
+      const cart = this.retrieve();
+      let item = cart.items.find((p) => p.productId === id);
+            
+      item.quantity += 1;
+      
+      cart.items = cart.items.filter((cartItem) => cartItem.quantity > 0);        
+    
+      this.calculateCart(cart);
+      this.save(cart);
+      this.dispatch(cart);
+    }
+
+    public minusQuantity(id, index): void {
+      const cart = this.retrieve();
+      let item = cart.items.find((p) => p.productId === id);
+            
+      item.quantity -= 1;
+      
+      cart.items = cart.items.filter((cartItem) => cartItem.quantity > 0);        
+    
+      this.calculateCart(cart);
+      this.save(cart);
+      this.dispatch(cart);
+    }
 
     public addItem(product: Modelo, quantity: number, price: number): void {        
         const cart = this.retrieve();

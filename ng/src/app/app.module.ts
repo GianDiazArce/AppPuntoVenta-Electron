@@ -1,7 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { LOCALE_ID, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+
+// idioma
+import { registerLocaleData } from "@angular/common";
+import  localeEsPe  from "@angular/common/locales/es-PE";
+
+
+registerLocaleData(localeEsPe, 'es-Pe');
 
 // Externals
 import { NgxPaginationModule } from "ngx-pagination";
@@ -54,6 +61,7 @@ import { UniquePipe } from './pipes/unique.pipe';
   providers: [
     LocalStorageServie,
     { provide: StorageService, useClass: LocalStorageServie },
+    { provide: LOCALE_ID, useValue: 'es-Pe' },
     {
       deps: [StorageService],
       provide: VentaService,

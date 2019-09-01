@@ -7,6 +7,27 @@
 </button>
 
 
+<!-- Filtrar por tipo -->
+
+
+<div class="row">
+  <div class="form-group col-md-3">
+    <label for="tipo">Tipo</label>
+    <select class="form-control" name="tipo" (change)="cboTipo($event)"required>
+      <option value="undefined">Seleccione que tipo de ropa</option>
+      <option *ngFor="let tipo of tipos" value="{{tipo.id}}">{{tipo.name}}</option>
+    </select>
+  </div> 
+  
+  <div class="form-group col-md-3">
+    <label for="marca">Marca</label>
+    <select class="form-control" name="marca"(change)="cboMarcaChange($event)" required>
+      <option value="undefined">Seleccione una marca</option>
+      <option  *ngFor="let marca of cboMarcas" value="{{marca.id}}" >{{marca.name}}</option>
+    </select>
+  </div> 
+</div>
+
 <!-- Modal -->
 <div class="modal fade" id="newModel" tabindex="-1" role="dialog" aria-labelledby="newModelLabel" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
@@ -25,8 +46,8 @@
                 <input class="form-check-input" type="radio" name="newName" id="newName" value="newName" (change)="rbName($event)" checked> Nuevo nombre
               </label>
               <label class="form-check-label ml-2">
-                  <input class="form-check-input" type="radio" name="newName" id="sameName" value="usingName" (change)="rbName($event)"> Usar nombre existente
-                </label>
+                <input class="form-check-input" type="radio" name="newName" id="sameName" value="usingName" (change)="rbName($event)"> Usar nombre existente
+              </label>
             </div>
           </div>
           <hr class="w-50">
@@ -39,7 +60,7 @@
               <div *ngIf="!newName">
                 <label for="name">Nombre:</label>
                 <select class="form-control" name="name" #name="ngModel" [(ngModel)]="modelo.name" required>
-                  <option value="{{model.name}}" *ngFor="let model of modelos | unique">{{model.name}}</option>
+                  <option value="{{model}}" *ngFor="let model of models">{{model}}</option>
                 </select>
               </div>
               
@@ -95,29 +116,43 @@
   </div>
 </div>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>#</th>
-      <th>Nombre</th>
-      <th>Marca</th>
-      <th>Talla</th>
-      <th>Stock</th>
-      <th *ngIf="role && role=='ROLE_ADMIN'">Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let model of modelos | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
-      <td scope="row">{{i+1}}</td>
-      <td>{{model.name}}</td>
-      <td>{{model.marca.name}}</td>
-      <td>{{model.talla.name}}</td>
-      <td>{{model.stock}}</td>
-      <td *ngIf="role && role=='ROLE_ADMIN'">
-        <button class="btn btn-warning mr-2" (click)="preUpdate(model)" data-toggle="modal" data-target="#newModel">Editar</button>
-        <button class="btn btn-danger" (click)="deleteModel(model)">Eliminar</button>
-      </td>
-    </tr>    
-  </tbody>
-</table>
-<pagination-controls class="text-center" (pageChange)="pageActual = $event"></pagination-controls>
+<div *ngIf="modelos">
+  <table class="table" >
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Nombre</th>
+        <th>Marca</th>
+        <th>Talla</th>
+        <th>Stock</th>
+        <th *ngIf="role && role=='ROLE_ADMIN'">Acciones</th>
+      </tr>
+    </thead>
+    <tbody *ngIf="modelos && modelos?.length > 0">
+      <tr *ngFor="let model of modelos | paginate: {itemsPerPage: 7, currentPage: pageActual} ; let i = index">
+        <td scope="row">{{i+1}}</td>
+        <td>{{model.name}}</td>
+        <td>{{model.marca.name}}</td>
+        <td>{{model.talla.name}}</td>
+        <td>{{model.stock}}</td>
+        <td *ngIf="role && role=='ROLE_ADMIN'">
+          <button class="btn btn-warning mr-2" (click)="preUpdate(model)" data-toggle="modal" data-target="#newModel">Editar</button>
+          <button class="btn btn-danger" (click)="deleteModel(model)">Eliminar</button>
+        </td>
+      </tr>    
+    </tbody>
+    <tbody *ngIf="modelos?.length == 0 && modelos">
+      <tr text>
+        <td colspan="5">No hay modelos</td>
+      </tr>    
+    </tbody>
+  </table>
+  <pagination-controls *ngIf="expression" class="text-center" (pageChange)="pageActual = $event"></pagination-controls>
+</div>
+
+<div *ngIf="!modelos">
+  <div class="alert alert-warning" role="alert">
+    <strong>Seleccione un tipo y luego una marca para ver los modelos</strong>
+  </div>
+</div>
+

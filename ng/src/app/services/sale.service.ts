@@ -28,5 +28,28 @@ export class SaleService {
 
         return this._http.get(this.url + 'venta', {headers});
     }
+    getVentasByMes(mes, token): Observable <any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
+
+        return this._http.get(this.url + 'venta/mes/' + mes, {headers});    
+    }
+
+    getVentasByDayAndMonth(day, month, token): Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
+
+        return this._http.get(this.url + 'venta/dia/' + day + '/' + month , {headers});
+    }
+
+    delete(id, token): Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
+
+        return this._http.delete(this.url + 'venta/' + id, {headers});
+    }
+
+    getVenta(id): Observable<any> {
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded');
+
+        return this._http.get(this.url + 'venta/' + id, {headers});
+    }
     
 }

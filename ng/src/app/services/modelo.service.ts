@@ -44,5 +44,12 @@ export class ModeloService {
 
         return this._http.get(this.url + 'modelo/marca/' + id, {headers});
     }
+
+    updateStock(id, stock, token) : Observable<any>{
+        let headers = new HttpHeaders().set('Content-Type', 'application/x-www-form-urlencoded').set('Authorization',token);
+
+        return this._http.get(this.url + 'modelo/' + id + '/' + stock, {headers});
+    }
+
     
 }
